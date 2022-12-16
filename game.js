@@ -4,7 +4,7 @@ const game = {
 	tickSpeed: ddbnum.new(1),
 	tickSpeedIsFunSoIMadeItABigNumber: true
 }; const stage0 = {
-	value: ddbnum.new(10000),
+	value: ddbnum.new(1),
 	power: ddbnum.new(1),
 	generation: ddbnum.new(1),
 	powerCost: 15,
