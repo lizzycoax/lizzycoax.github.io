@@ -1,11 +1,12 @@
 const game = {
-	gameStage: 0,
+	gameStage: 2,
 	unlockStage: 0,
 	tickSpeed: ddbnum.new(1),
 	tickSpeedIsFunSoIMadeItABigNumber: true
 }
+
 const stage0 = {
-	value: ddbnum.new(10000),
+	value: ddbnum.new(0),
 	power: ddbnum.new(1),
 	powerCost: ddbnum.new(15),
 	generation: ddbnum.new(1),
@@ -15,6 +16,7 @@ const stage0 = {
 		return this.generationCost.add(this.generationCostAdd.mult(this.generation.sub(1)))
 	}
 }
+
 const stage1 = {
 	values: [ddbnum.new(0), ddbnum.new(1)],
 	height: 1,
