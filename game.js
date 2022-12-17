@@ -1,5 +1,5 @@
 const game = {
-	gameStage: 2,
+	gameStage: 0,
 	unlockStage: 0,
 	tickSpeed: ddbnum.new(1),
 	tickSpeedIsFunSoIMadeItABigNumber: true
