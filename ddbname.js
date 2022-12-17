@@ -92,7 +92,7 @@ const ddbnamesettings = {
 			if (thousand !== "0")
 				while (one.split(".")[0].length < 3)
 					one = `0${one}`
-			thousand = thousand !== "0" ? thousand + "'" : ""
+			thousand = thousand !== "0" ? thousand + " " : ""
 			return thousand + one + illion
 		}
 	}
