@@ -3,20 +3,37 @@ const game = {
 	unlockStage: 0,
 	tickSpeed: ddbnum.new(1),
 	tickSpeedIsFunSoIMadeItABigNumber: true
-}; const stage0 = {
-	value: ddbnum.new(1),
+}
+const stage0 = {
+	value: ddbnum.new(10000),
 	power: ddbnum.new(1),
 	generation: ddbnum.new(1),
-	powerCost: 15,
-	generationCost: 15,
-	generationCostAdd: 5
-}; const stage1 = {
-	values: [ddbnum.new(0), ddbnum.new(1)],
-	height: 1,
-	maxHeight: 2,
-	minHeight: 0,
-	bottomCost: ddbnum.new(10000),
+	powerCost: ddbnum.new(15),
+	generationCost: ddbnum.new(15),
+	generationCostAdd: ddbnum.new(5),
+	getGenerationCost: function() {
+		return this.generationCost.add(this.generationCostAdd.mult(this.generation.sub(1)))
+	}
+}
+const stage1 = {
+	values: [ddbnum.new(0), ddbnum.new(1), ddbnum.new(0), ddbnum.new(10000)],
+	power: ddbnum.new(1),
+	height: 3,
+	maxHeight: 3,
+	minHeight: -1,
+	bottomCost: ddbnum.new(1e4),
+	getBottomCost: function() {
+		return this.bottomCost.exp(1 - this.minHeight)
+	},
 	topCost: ddbnum.new(9),
+	getTopCost: function(n) {
+		return this.topCost.exp((n + 1) / 2)
+	},
+	powerCost: ddbnum.new(1e8),
+	powerCostMult: ddbnum.new(10),
+	getPowerCost: function() {
+		return this.powerCost.mult(this.powerCostMult.exp(this.power.sub(1)))
+	},
 	names: [        "displacement", "velocity", "acceleration", "jolt",   "snap",   "crackle",  "pop",   "lock",   "drop"],
 	negativeNames: ["absement",     "absity",   "abseleration", "absolt", "absnap", "absackle", "absop", "absock", "absrop"]
 }
@@ -28,7 +45,7 @@ function getProgress() {
 		progress = stage0.value.num()**0.25 * (10000 / 10000**0.25) * 100
 		break
 	case 1:
-		progress = Math.log(Math.max(1, stage1.values[stage1.minHeight].exp(0.1).num())) * (1000000 / Math.log(1000000))
+		progress = Math.log(Math.max(1, (stage1.values[stage1.minHeight] || ddbnum.new(0)).exp(0.1).num())) * (1000000 / Math.log(1000000))
 		break
 	}
 	return Math.min(progress, 1000000)
@@ -39,8 +56,7 @@ function getTime() {
 }
 
 function getValueName(n) {
-	let name = (n >= 0 ? stage1.names[n] : stage1.negativeNames[-1 - n]) || ` m/s^${n}`
-	return name
+	return (n >= 0 ? stage1.names[n] : stage1.negativeNames[-1 - n]) || ` m/s^${n}`
 }
 
 function capitalize(string) {
@@ -59,17 +75,19 @@ function capitalize(string) {
 	function increaseValue() {
 		if (game.gameStage !== 0) return
 		stage0.value = ddbnum.add(stage0.value, stage0.power)
-	} function increasePower() {
+	}
+	function increasePower() {
 		if (game.gameStage !== 0 || game.unlockStage < 1) return
 		if (stage0.value.under(stage0.powerCost)) return
 		stage0.value = ddbnum.sub(stage0.value, stage0.powerCost)
 		stage0.power = ddbnum.add(stage0.power, stage0.generation)
-	} function increaseGeneration() {
+	}
+	function increaseGeneration() {
 		if (game.gameStage !== 0 || game.unlockStage < 2) return
-		if (!(stage0.power.over(stage0.generationCost))) return
-		stage0.power = ddbnum.sub(stage0.power, stage0.generationCost)
+		let generationCost = stage0.getGenerationCost()
+		if (!stage0.power.over(generationCost)) return
+		stage0.power = ddbnum.sub(stage0.power, generationCost)
 		stage0.generation = ddbnum.add(stage0.generation, 1)
-		stage0.generationCost = ddbnum.add(stage0.generationCost, stage0.generationCostAdd)
 	}
 	
 	let resetStage1 = function() {
@@ -87,29 +105,38 @@ function capitalize(string) {
 	
 	function increaseValue1(n) {
 		if (game.gameStage !== 1) return
-		if (stage1.values[n - 1].under(stage1.topCost.exp((n + 1) / 2))) return
-		stage1.values[n - 1] = ddbnum.sub(stage1.values[n - 1], stage1.topCost.exp((n + 1) / 2))
-		stage1.values[n] = ddbnum.add(stage1.values[n], 1)
-	} function addTopLayer() {
+		let available = stage1.values[n - 1].div(stage1.getTopCost(n)).min(stage1.power)
+		if (available.under(1)) return
+		stage1.values[n - 1] = ddbnum.sub(stage1.values[n - 1], stage1.getTopCost(n).mult(available))
+		stage1.values[n] = ddbnum.add(stage1.values[n], available)
+	}
+	function addTopLayer() {
 		if (game.gameStage !== 1 || game.unlockStage < 1) return
-		if (!stage1.values[stage1.height] || stage1.values[stage1.height].under(stage1.topCost.exp((stage1.height + 2) / 2))) return
+		if (!stage1.values[stage1.maxHeight] || stage1.values[stage1.maxHeight].under(stage1.getTopCost(stage1.maxHeight + 1))) return
 		stage1.values = [ddbnum.new(0), ddbnum.new(1)]
 		stage1.height = 1
 		stage1.maxHeight++
 		previousGameValues.stage1Height = 1
 		resetStage1()
-	} function addBottomLayer() {
+	}
+	function addBottomLayer() {
 		if (game.gameStage !== 1 || game.unlockStage < 2) return
-		if (stage1.values[stage1.minHeight].under(stage1.bottomCost.exp(1 - stage1.minHeight))) return
+		if (stage1.values[stage1.minHeight].under(stage1.getBottomCost())) return
 		stage1.values = [ddbnum.new(0), ddbnum.new(1)]
 		stage1.height = 1
 		stage1.minHeight--
 		previousGameValues.stage1Height = 1
 		resetStage1()
-	} function upgradeBuying() {
+	}
+	function upgradeBuying() {
 		if (game.gameStage !== 1 || game.unlockStage < 3) return
-	} function decreaseCost() {
-		if (game.gameStage !== 1 || game.unlockStage < 3) return
+		if (stage1.values[stage1.minHeight].under(stage1.getPowerCost())) return
+		stage1.power = stage1.power.add(1)
+		for (let i = stage1.minHeight; i <= 0; i++)
+			stage1.values[i] = stage1.values[i].exp(0.1)
+	}
+	function decreaseCost() {
+		//if (game.gameStage !== 1 || game.unlockStage < 3) return
 	}
 	
 	function progressStage() {
@@ -134,18 +161,18 @@ function capitalize(string) {
 			}
 			break
 		case 1:
-			if (stage1.height < stage1.maxHeight && game.unlockStage > 0 && !(stage1.values[stage1.height].under(stage1.topCost.exp((stage1.height + 2) / 2)))) {
+			if (stage1.height < stage1.maxHeight && game.unlockStage > 0 && !(stage1.values[stage1.height].under(stage1.getTopCost(stage1.maxHeight + 1)))) {
 				let height = stage1.height + 1
 				stage1.values[height] = ddbnum.new(0)
 				stage1.height = height
 			}
 			switch (game.unlockStage) {
 			case 0:
-				if (stage1.values[0].under(stage1.topCost.exp(1))) break
+				if (stage1.values[0].under(stage1.getTopCost(1))) break
 				game.unlockStage = 1
 				break
 			case 1:
-				if ((!stage1.values[2] || stage1.values[2].under(stage1.topCost.exp(2))) && stage1.values[0].under(stage1.bottomCost)) break
+				if ((!stage1.values[2] || stage1.values[2].under(stage1.getTopCost(3))) && stage1.values[0].under(stage1.bottomCost)) break
 				game.unlockStage = 2
 				break
 			case 2:
@@ -163,7 +190,7 @@ function capitalize(string) {
 		
 		if (progressMet !== previousGameValues.progressMet) {
 			if (progressMet) {
-				document.getElementById("newStage").innerText = game.gameStage + 1
+				document.getElementById("newStage").innerText = (game.gameStage + 1).toString()
 				document.getElementById("progressButton").removeAttribute("hidden")
 			}
 			else document.getElementById("progressButton").setAttribute("hidden", "absolutely")
@@ -228,35 +255,38 @@ function capitalize(string) {
 		}
 	}
 	
-	let updateStage0 = function(tick) {
-		document.getElementById("value").innerText = ddbnum.name(stage0.value)
+	let updateStage0 = function() {
+		document.getElementById("value").innerText = ddbname(stage0.value)
 		if (game.unlockStage > 0) {
-			document.getElementById("power").innerText = ddbnum.name(stage0.power)
-			document.getElementById("powerCost").innerText = ddbnum.name(stage0.powerCost)
+			document.getElementById("power").innerText = ddbname(stage0.power)
+			document.getElementById("powerCost").innerText = ddbname(stage0.powerCost)
 		}
 		if (game.unlockStage > 1) {
-			document.getElementById("generation").innerText = ddbnum.name(stage0.generation)
-			document.getElementById("generationCost").innerText = ddbnum.name(stage0.generationCost)
+			document.getElementById("generation").innerText = ddbname(stage0.generation)
+			document.getElementById("generationCost").innerText = ddbname(stage0.getGenerationCost())
 		}
 	}
 	
 	let updateStage1 = function(tick) {
-		document.getElementById("value1_0").innerText = ddbnum.name(stage1.values[0], 1000)
+		document.getElementById("value1_0").innerText = ddbname(stage1.values[0], 1000)
 		for (let i = stage1.height; i > stage1.minHeight; i--) {
 			stage1.values[i - 1] = stage1.values[i - 1].add(stage1.values[i].mult(tick))
 		}
 		if (game.unlockStage > 0) {
 			for (let i = stage1.height; i >= stage1.minHeight; i--) {
 				if (i === 0) continue
-				document.getElementById(`value1_${i}`).innerText = ddbnum.name(stage1.values[i], 1000)
-				if (i > 0) document.getElementById(`value1_${i}Cost`).innerText = ddbnum.name(stage1.topCost.exp((i + 1) / 2), 1000)
+				document.getElementById(`value1_${i}`).innerText = ddbname(stage1.values[i], 1000)
+				if (i > 0) document.getElementById(`value1_${i}Cost`).innerText = ddbname(stage1.getTopCost(i), 1000)
 			}
 		}
 		if (game.unlockStage > 1) {
-			document.getElementById("bottomCost").innerText = ddbnum.name(stage1.bottomCost.exp(1 - stage1.minHeight), 1000) + " " + getValueName(stage1.minHeight)
-			document.getElementById("topCost").innerText = ddbnum.name(stage1.topCost.exp((stage1.maxHeight + 2) / 2), 1000) + " " + getValueName(stage1.maxHeight)
-			document.getElementById("minHeight").innerText = ddbnum.name(stage1.minHeight)
-			document.getElementById("maxHeight").innerText = ddbnum.name(stage1.maxHeight)
+			document.getElementById("bottomCost").innerText = `${ddbname(stage1.getBottomCost(), 1000)} ${getValueName(stage1.minHeight)}`
+			document.getElementById("topCost").innerText = `${ddbname(stage1.getTopCost(stage1.maxHeight + 1), 1000)} ${getValueName(stage1.maxHeight)}`
+			document.getElementById("minHeight").innerText = ddbname(stage1.minHeight)
+			document.getElementById("maxHeight").innerText = ddbname(stage1.maxHeight)
+		}
+		if (game.unlockStage > 2) {
+			document.getElementById("powerCost1").innerText = `${ddbname(stage1.getPowerCost(), 1000)}`
 		}
 	}
 	
@@ -272,7 +302,7 @@ function capitalize(string) {
 		
 		switch (game.gameStage) {
 		case 0:
-			updateStage0(tick)
+			updateStage0()
 			break
 		case 1:
 			updateStage1(tick)
@@ -282,12 +312,12 @@ function capitalize(string) {
 		document.getElementById("progressBar").value = progress / 10000
 	}
 	
-	let loop = setInterval(update, 1000/24)
+	setInterval(update, 1000/24)
 }
 
 document.getElementById("baseSlider").oninput = function() {
 	let base = this.value
-	let name = {2: "binary", 3: "ternary", 6: "senary", 8: "octal", 10: "decimal", 12: "duodecimal", 16: "hexadecimal"}[base]
+	let name = {2: "binary", 3: "ternary", 6: "sexary", 8: "octal", 10: "decimal", 12: "duodecimal", 16: "hexadecimal"}[base]
 	name = base + (name ? ` (${name})` : "")
 	document.getElementById("base").innerText = name
 	ddbnamesettings.base = base

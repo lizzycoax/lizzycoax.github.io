@@ -6,9 +6,6 @@ const ddbnum = {
 			num: function() {
 				return ddbn.bas
 			},
-			name: function(decimals) {
-				return ddbnum.name(ddbn, decimals)
-			},
 			under: function(n) {
 				return ddbnum.under(ddbn, n)
 			},
@@ -45,9 +42,6 @@ const ddbnum = {
 		}
 		return ddbn
 	},
-	name: function(n, decimals) {
-		return ddbname(n, decimals)
-	},
 	under: function(n1, n2) {
 		return (n1.type === "ddbnum" ? n1.bas : n1) < (n2.type === "ddbnum" ? n2.bas : n2)
 	},
@@ -76,7 +70,7 @@ const ddbnum = {
 		ddbn.bas -= (n2.type === "ddbnum" ? n2.bas : n2)
 		return ddbn
 	},
-	neg: function(n1, n2) {
+	neg: function(n1) {
 		let ddbn = ddbnum.new(n1)
 		ddbn.bas *= -1
 		return ddbn

@@ -3,14 +3,14 @@ const ddbnamesettings = {
 }
 
 {
-	let t, h, k, m
+	let t, k, m
 	
 	function round(n, precision) {
 		precision /= n
 		let decimals = Math.round(Math.log(precision) / Math.log(t))
 		precision = t**decimals
 		if (!precision) return n
-		return Math.floor(n * precision + 0.001) / precision
+		return Math.floor(n * precision + 0.000001) / precision
 	}
 	
 	let getIllion
@@ -30,15 +30,15 @@ const ddbnamesettings = {
 			if (n < 10)
 				return prefix ? unitPrefix : unit
 			if (n < 100) {
-				if (unitPrefix == "nil")
+				if (unitPrefix === "nil")
 					return ten
 				return unitPrefix + ten
 			}
-			if (unitPrefix == "nil" && ten == "nil")
+			if (unitPrefix === "nil" && ten === "nil")
 				return hundred
-			if (ten == "nil")
+			if (ten === "nil")
 				return unitPrefix + hundred
-			if (unitPrefix == "nil")
+			if (unitPrefix === "nil")
 				return ten + "a" + hundred
 			return unitPrefix + ten + "a" + hundred
 		}
@@ -46,12 +46,12 @@ const ddbnamesettings = {
 		function sixDigitPrefix(n, prefix) {
 			let unit = threeDigitPrefix(n % 1000, prefix)
 			let thousand = threeDigitPrefix(Math.floor(n / 1000) % 1000, true)
-			if (thousand == "un") thousand = ""
+			if (thousand === "un") thousand = ""
 			if (Math.floor(n / 1000) % 1000 >= 10) thousand += "a"
 			
-			if (thousand == "nil")
+			if (thousand === "nil")
 				return unit
-			if (unit == "nil")
+			if (unit === "nil")
 				return thousand + "mor"
 			return thousand + "mor" + unit
 		}
@@ -61,17 +61,18 @@ const ddbnamesettings = {
 			
 			if (nValue === 0) return ""
 			
-			let name
+			let name = null
 			
 			while (n1 > 0 && n1b >= 0) {
 				let number = sixDigitPrefix(Math.floor(n1 + 1/m))
 				let prefix = sixDigitPrefix(Math.floor(n1b), true)
+				let prefix2 = units2[1]
 				if (prefix !== "nil")
-					prefix = prefix === "un" ? "mill" : prefix + (n1b < t ? "" : "a") + "mill"
+					prefix = prefix === "un" ? prefix2 : prefix + (n1b < t ? "" : "a") + prefix2
 				if (number !== "nil") {
 					name = ((number === "m" && prefix !== "nil") ? "" : number) +
 					(prefix === "nil" ? "" : (number === "m" ? "" : "i") + prefix) +
-					(name == null ? "" : "o" + name)
+					(name === null ? "" : "o" + name)
 				}
 				n1b--
 				n1 = n1 * m % m
@@ -98,7 +99,6 @@ const ddbnamesettings = {
 	
 	function ddbname(n, precision) {
 		t = ddbnamesettings.base
-		h = t**2
 		k = t**3
 		m = k**2
 		

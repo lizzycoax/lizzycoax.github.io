@@ -1,4 +1,5 @@
 <head>
+<title>Automation layers</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -8,7 +9,7 @@
 </div></div>
 
 <div class="section" id="left"><div class="insection">
-<p id="progressButton" hidden="alright"><button onclick="progressStage()">Progress to stage <label id="newStage"></label></button></p>
+<p id="progressButton" hidden="hidden"><button onclick="progressStage()">Progress to stage <label id="newStage"></label></button></p>
 
 <div id="stage1Left" hidden>
 <div id="stage1Resets" hidden>
@@ -26,39 +27,39 @@ Height: <label id="maxHeight"></label></p>
 <div id="stage0">
 <p><button onclick="increaseValue()">Increase value</button>
 Value: <label id="value"></label></p>
-<p id="powerButton" hidden="completely"><button onclick="increasePower()">Increase power<br>
+<p id="powerButton" hidden><button onclick="increasePower()">Increase power<br>
 Cost: <label id="powerCost"></label></button>
 Power: <label id="power"></label></p>
-<p id="generationButton" hidden="for reals"><button onclick="increaseGeneration()">Increase generation<br>
+<p id="generationButton" hidden><button onclick="increaseGeneration()">Increase generation<br>
 Cost: <label id="generationCost"></label> power</button>
 Generation: <label id="generation"></label></p>
 </div>
 
-<div id="stage1" hidden="alright">
+<div id="stage1" hidden>
 <div id="stage1Values">
 </div>
 <div id="stage1Buttons" hidden>
 </div>
 </div>
 
-<div id="stage2" hidden="yep">
+<div id="stage2" hidden>
 </div>
 </div></div>
 
 <div class="section" id="right"><div class="insection">
-<div id="stage1Right" hidden="uh-huh">
-<div id="stage1Upgrades" hidden="so true">
+<div id="stage1Right" hidden>
+<div id="stage1Upgrades" hidden=>
 <p><button onclick="upgradeBuying()">Upgrade buying power<br>
-Cost: <label id="upgradeBuyCost"></label></button></p>
+Cost: <label id="powerCost1"></label></button></p>
 <p><button onclick="decreaseCost()">Decrease cost<br>
-Cost: <label id="decreaseCostCost"></label></button></p>
+Cost: <label id="costCost1"></label></button></p>
 </div>
 </div>
 </div></div>
 
 <div class="section" id="bottom"><div class="insection">
 <progress id="progressBar" value="0" max="100"></progress>
-<p>base: <input type="range" min="2" max="36" value="10" id="baseSlider"><label id="base">10 (decimal)</label></p>
+<p>base: <label><input type="range" min="2" max="36" value="10" id="baseSlider"></label><label id="base">10 (decimal)</label></p>
 </div></div>
 </body>
 
