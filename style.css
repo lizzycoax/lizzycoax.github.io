@@ -1,33 +1,41 @@
 body {
 	margin: 0
 }
+
 .section {
 	padding: 0;
 	float: left;
 	overflow: auto
 }
+
 .insection {
 	margin: 8px
 }
+
 #progressBar {
 	width: 100%
 }
+
 #top {
 	width: 100%;
 	height: 15%
 }
+
 #left {
 	width: 25%;
 	height: 70%
 }
+
 #middle {
 	width: 50%;
 	height: 70%
 }
+
 #right {
 	width: 25%;
 	height: 70%
 }
+
 #bottom {
 	width: 100%;
 	height: 15%

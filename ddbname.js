@@ -8,7 +8,7 @@ const ddbnamesettings = {
 	function round(n, precision) {
 		precision /= n
 		let decimals = Math.round(Math.log(precision) / Math.log(t))
-		precision = t**decimals
+		precision = t ** decimals
 		if (!precision) return n
 		return Math.floor(n * precision + 0.000001) / precision
 	}
@@ -64,15 +64,15 @@ const ddbnamesettings = {
 			let name = null
 			
 			while (n1 > 0 && n1b >= 0) {
-				let number = sixDigitPrefix(Math.floor(n1 + 1/m))
+				let number = sixDigitPrefix(Math.floor(n1 + 1 / m))
 				let prefix = sixDigitPrefix(Math.floor(n1b), true)
 				let prefix2 = units2[1]
 				if (prefix !== "nil")
 					prefix = prefix === "un" ? prefix2 : prefix + (n1b < t ? "" : "a") + prefix2
 				if (number !== "nil") {
 					name = ((number === "m" && prefix !== "nil") ? "" : number) +
-					(prefix === "nil" ? "" : (number === "m" ? "" : "i") + prefix) +
-					(name === null ? "" : "o" + name)
+						(prefix === "nil" ? "" : (number === "m" ? "" : "i") + prefix) +
+						(name === null ? "" : "o" + name)
 				}
 				n1b--
 				n1 = n1 * m % m
@@ -99,8 +99,8 @@ const ddbnamesettings = {
 	
 	function ddbname(n, precision) {
 		t = ddbnamesettings.base
-		k = t**3
-		m = k**2
+		k = t ** 3
+		m = k ** 2
 		
 		let num = (n.type === "ddbnum" ? n.bas : n)
 		if (num === 0) return ""
