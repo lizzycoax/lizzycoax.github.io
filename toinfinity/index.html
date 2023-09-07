@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>To infinity!</title>
+<meta name="color-scheme" content="dark light">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>To infinity!</h1>
+<div id="startDiv">
+	<p>You found a clump of exotic matter!</p>
+	<button onclick="startGame()">Grab</button>
+</div>
+<div id="gameDiv" hidden>
+	<div class="divSection">
+		<h2>Inventory</h2>
+		<p>Exotic matter: <span id="exoticMatter">1</span></p>
+		<p>Cash: <span id="cash">50</span></p>
+	</div>
+	<div class="divSection">
+		<h2>Generators</h2>
+		<button id="addCrystal" onclick="addCrystal()">Grow crystal in jar</button>
+		<br>
+		<span>Cost: 1 exotic matter, 2 cash</span>
+		<div id="crystalJarDiv">
+			<div id="crystalJarTemplate" hidden>
+				<br>
+				<progress class="crystalProgress" value="0" max="1"></progress>
+				<button class="harvestCrystal" onclick="harvestCrystal(this)" disabled>
+					<span class="harvestCrystalText">Harvest</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="bignum.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
