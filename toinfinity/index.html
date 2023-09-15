@@ -7,31 +7,67 @@
 </head>
 <body>
 <h1>To infinity!</h1>
-<div id="startDiv">
-	<p>You found a clump of exotic matter!</p>
-	<button onclick="startGame()">Grab</button>
-</div>
-<div id="gameDiv" hidden>
-	<div class="divSection">
+<div id="gameDiv">
+	<div class="divSection"><div class="innerDivSection">
 		<h2>Inventory</h2>
-		<p>Exotic matter: <span id="exoticMatter">1</span></p>
-		<p>Cash: <span id="cash">50</span></p>
-	</div>
-	<div class="divSection">
-		<h2>Generators</h2>
-		<button id="addCrystal" onclick="addCrystal()">Grow crystal in jar</button>
+		<p>Crystals: <span id="crystals" class="amountText">0</span></p>
+		<p>Entropy: <span id="entropyPercent" class="amountText">0</span></p>
+		<p>Matter: <span id="matter" class="amountText">0</span><br>
+		Antimatter: <span id="antimatter" class="amountText">0</span></p>
+	</div></div>
+	<div class="divSection"><div class="innerDivSection">
+		<h2>Generation</h2>
+		<p>
+			<span class="bigText">Entropy decreaser</span><br>
+			Halves entropy every
+				<span id="entropyInterval" class="amountText">10</span>
+			seconds
+		</p>
+		<button id="buyEntropyDecreaser" onclick="buyEntropyDecreaserEv()">
+			<span>Buy</span>
+		</button>
+		<span id="entropyDecreasers" class="amountText">0</span>
 		<br>
-		<span>Cost: 1 exotic matter, 2 cash</span>
-		<div id="crystalJarDiv">
-			<div id="crystalJarTemplate" hidden>
-				<br>
-				<progress class="crystalProgress" value="0" max="1"></progress>
-				<button class="harvestCrystal" onclick="harvestCrystal(this)" disabled>
-					<span class="harvestCrystalText">Harvest</span>
-				</button>
-			</div>
-		</div>
-	</div>
+		<span>Cost:
+			<span class="amountText">1</span>
+		crystal</span>
+		<p>
+			<span class="bigText">Concentrate entropy</span><br>
+			Turns current entropy into matter and antimatter
+		</p>
+		<button id="concentrateEntropy" onclick="concentrateEntropyEv()">
+			<span>'Splode</span>
+		</button>
+		<br>
+		<span>You will gain
+			<span id="matterPreview" class="amountText">0</span>
+		matter/antimatter</span>
+		<p>
+			<span class="bigText">Concentrate matter</span><br>
+			Concentrate matter to form a crystal
+		</p>
+		<button id="concentrateMatter" onclick="concentrateMatterEv()">
+			<span>Smash</span>
+		</button>
+		<br>
+		<span>Cost:
+			<span id="crystalCost" class="amountText">0</span>
+		matter</span>
+		<p>
+			<span class="bigText">Star</span><br>
+			Resets crystal related stuff, increases entropy rate
+		</p>
+		<button id="formStar" onclick="formStarEv()">
+			<span>Floom</span>
+		</button>
+		<span id="stars" class="amountText">0</span><br>
+		<span>Cost:
+			<span id="starCost" class="amountText">1e30</span>
+		matter</span>
+	</div></div>
+	<div class="divSection"><div class="innerDivSection">
+		<h2>Convertion</h2>
+	</div></div>
 </div>
 <script src="bignum.js"></script>
 <script src="game.js"></script>
