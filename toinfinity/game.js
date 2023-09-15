@@ -1,93 +1,155 @@
-//extra space because i cant handle actual code being on top aaaaahhhhh
+//values
 
-//constants
+values = {
+	crystals: 1,
+	totalCrystals: 1,
+	entropy: 1,
+	entropyDecreasers: 0,
+	matter: 0,
+	stars: 0,
+	antimatter: 0
+};
 
-crystalChange = [["exoticMatter", -1], ["cash", -2]];
-crystalTime = 5;
+matterGain = () =>
+	$sub($inv(values.entropy), 1);
+
+crystalCost = (totalCrystals) =>
+	$sub($exp(2, $sub($exp(2, totalCrystals), 1)), 1);
+
+starCost = () =>
+	crystalCost($add(7, values.stars));
+
+entropyInterval = () =>
+	$mul($inv($add(values.stars, 1)), 10);
+
+gainCrystalChange = (val) => [
+	["crystals", $add(values.crystals, val)],
+	["totalCrystals", $add(values.totalCrystals, val)]
+];
+
+entropyDecreaserChange = () => [
+	["crystals", $sub(values.crystals, 1)],
+	["entropyDecreasers", $add(values.entropyDecreasers, 1)]
+];
+
+concentrateEntropyChange = () => [
+	["entropy", 1],
+	["matter", $add(values.matter, matterGain())],
+	["antimatter", $add(values.antimatter, matterGain())]
+];
+
+concentrateMatterChange = () => [
+	["matter", $sub(values.matter, crystalCost(values.totalCrystals))],
+	["crystals", $add(values.crystals, 1)],
+	["totalCrystals", $add(values.totalCrystals, 1)]
+];
+
+formStarChange = () => [
+	["crystals", 1],
+	["totalCrystals", 1],
+	["entropy", 1],
+	["entropyDecreasers", 0],
+	["matter", $min($sub(values.matter, starCost()), 0)],
+	["stars", $add(values.stars, 1)]
+];
 
 //functions
 
-changeValues = (prices, fake) =>
-	((elems) =>
-		((vals) =>
-			vals.every((val, i) =>
-				val >= 0
-			) && (fake ||
-				((newVals) => {
-					elems.forEach((elem, i) => {
-						elem.innerText = newVals[i];
-					});
-				})(vals),
-			true)
-		)(elems.map((elem, i) =>
-			Number(elem.innerText) + prices[i][1]
-		))
-	)(prices.map((price) =>
-		document.getElementById(price[0])
-	));
-
-updateAddCrystalButton = () => {
-	((but) => {
-		changeValues(crystalChange, true) ?
-			but.removeAttribute("disabled") :
-			but.setAttribute("disabled", "");
-	})(document.getElementById("addCrystal"));
+setText = (name, text) => {
+	((elem) => {
+		elem && (() => {
+			elem.innerText = text
+		})();
+	})(document.getElementById(name));
 };
 
-nextCrystalProgress = (val, time) =>
-	Math.expm1(Math.log1p(val) + time / Math.LOG2E / crystalTime);
+setEnabled = (name, on) => {
+	((elem) => {
+		on ?
+			elem.removeAttribute("disabled") :
+			elem.setAttribute("disabled", "")
+	})(document.getElementById(name));
+};
+
+changeValues = (vals, fake) =>
+	vals.every((val, i) =>
+		$mte(val[1], 0)
+	) && (fake ||
+		vals.forEach((val, i) => {
+			values[val[0]] = val[1];
+			setText(val[0], $str(values[val[0]]));
+			setText(val[0] + "Percent", $str($mul(values[val[0]], 100)) + "%");
+		})
+	, true);
+
+gainCrystals = (val) =>
+	changeValues(gainCrystalChange(val));
 
 //events
 
-startGame = () => {
-	document.getElementById("startDiv").setAttribute("hidden", "");
-	document.getElementById("gameDiv").removeAttribute("hidden");
+buyEntropyDecreaserEv = () => {
+	changeValues(entropyDecreaserChange());
 };
 
-addCrystal = () => {
-	changeValues(crystalChange) &&
-		((temp) => {
-			temp.removeAttribute("id");
-			temp.setAttribute("class", "crystalJar");
-			document.getElementById("crystalJarDiv").appendChild(temp);
-			temp.removeAttribute("hidden");
-		})(document.getElementById("crystalJarTemplate").cloneNode(true));
-	updateAddCrystalButton();
+concentrateEntropyEv = () => {
+	changeValues(concentrateEntropyChange());
 };
 
-harvestCrystal = (but) => {
-	changeValues([["exoticMatter", 1]]) &&
-		((prog) => {
-			Number(prog.getAttribute("value")) == Number(prog.getAttribute("max")) &&
-				(() => {
-					prog.setAttribute("value", 0);
-					but.removeAttribute("disabled");
-				})();
-		})(but.parentElement.querySelector(".crystalProgress"));
-	updateAddCrystalButton();
+concentrateMatterEv = () => {
+	changeValues(concentrateMatterChange());
+};
+
+formStarEv = () => {
+	changeValues(formStarChange());
 };
 
 //updates
 
-updateCrystals = (time) => {
-	Array.from(document.getElementsByClassName("crystalJar")).forEach((elem) => {
-		((prog, but) => {
-			((val) => {
-				prog.setAttribute("value", val);
-				val == Number(prog.getAttribute("max")) ?
-					but.removeAttribute("disabled") :
-					but.setAttribute("disabled", "");
-			})(Math.min(
-				Number(prog.getAttribute("max")),
-				nextCrystalProgress(Number(prog.getAttribute("value")), time)
-			));
-		})(
-			elem.querySelector(".crystalProgress"),
-			elem.querySelector(".harvestCrystal")
-		);
-	});
+decreaseEntropy = (time) => {
+	changeValues([["entropy",
+		$exp(2,
+			$sub(
+				$log(2, values.entropy)
+			, $mul(
+				$div(values.entropyDecreasers, entropyInterval())
+			, time))
+		)
+	]]);
 };
 
-setInterval(() => {
-	updateCrystals(1/60);
-}, 1000/60);
+updateCosts = () => {
+	setText("entropyInterval", $str(entropyInterval()));
+	setText("matterPreview", $str(matterGain()));
+	setText("crystalCost", $str(crystalCost(values.totalCrystals)));
+	setText("starCost", $str(starCost()));
+	setEnabled(
+		"buyEntropyDecreaser",
+		changeValues(entropyDecreaserChange(), true)
+	);
+	setEnabled(
+		"concentrateMatter",
+		changeValues(concentrateMatterChange(), true)
+	);
+	setEnabled(
+		"formStar",
+		changeValues(formStarChange(), true)
+	);
+};
+
+update = (then) => {
+	((now) => {
+		((time) => {
+			decreaseEntropy(time);
+			updateCosts();
+		})((now - then) / 1000);
+		setTimeout(() => {
+			update(now);
+		}, 1/24);
+	})(Date.now());
+};
+
+update(Date.now());
+
+//initialize
+
+changeValues(Object.entries(values));
