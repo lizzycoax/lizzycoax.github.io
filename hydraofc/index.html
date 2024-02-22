@@ -17,11 +17,11 @@ span {
 <p>
 	definition<br>
 	<br>
-	f<sub>N</sub>(0, n) = n<br>
-	f<sub>N</sub>(1, n) = S(n)<br>
-	f<sub>N+1</sub>(1+ω<sub>N+1</sub>g<sub>N+1</sub>(0)+a, n) = f<sub>N+1</sub><sup>1+a</sup>(ω<sub>N+1</sub>g<sub>N+1</sub>(0), n) aka (f<sub>N+1</sub>(ω<sub>N+1</sub>g<sub>N+1</sub>(0), .))<sup>1+a</sup>(n)<br>
-	f<sub>N+1</sub>(1+g<sub>N+1</sub>(ω<sub>N+1</sub><sup>c+1</sup>(b+1)), n) = f(g<sub>N+1</sub>(ω<sub>N+1</sub><sup>c+1</sup>b+ω<sub>N+1</sub><sup>c</sup>(ω<sub>N</sub>+n)), 0)<br>
-	g<sub>N+1</sub>(x) is any normal form using f<sub>N+1</sub> that ends with x<br><span>
+	f<sub>1+N</sub>(0, n) = n<br>
+	f<sub>1+N</sub>(1, n) = S(n)<br>
+	f<sub>1+N</sub>(1+ω<sub>N+1</sub>g<sub>1+N</sub>(0)+a, n) = f<sub>1+N</sub><sup>1+a</sup>(ω<sub>N+1</sub>g<sub>1+N</sub>(0), n) aka (f<sub>1+N</sub>(ω<sub>N+1</sub>g<sub>1+N</sub>(0), .))<sup>1+a</sup>(n)<br>
+	f<sub>1+N</sub>(1+g<sub>1+N</sub>(ω<sub>N+1</sub><sup>c+1</sup>(b+1)), n) = f<sub>1+N</sub>(g<sub>1+N</sub>(ω<sub>N+1</sub><sup>c+1</sup>b+ω<sub>N+1</sub><sup>c</sup>(ω<sub>N</sub>+n)), 0)<br><span>
+		g<sub>1+N</sub>(x) = f<sub>1+N+1</sub>(h+x, 0) (see normal form)<br>
 		ω<sub>N+1</sub> > a<br>
 		ω<sub>N+1</sub> > b<br>
 		ω<sub>N+2</sub> > c<br>
@@ -42,7 +42,7 @@ span {
 	<br>
 	normal form<br>
 	<br>
-	the normal form is f<sub>N+1</sub>(h+a, 0)+n or n where<br><span>
+	the normal form is f<sub>1+N</sub>(h+a, 0)+n or n where<br><span>
 		ω<sub>N</sub> > n<br>
 		ω<sub>N+1</sub> > a<br>
 		h = ω<sub>N+1</sub><sup>c<sub>1</sub></sup>b<sub>1</sub>+ω<sub>N+1</sub><sup>c<sub>2</sub></sup>b<sub>2</sub>+...+ω<sub>N+1</sub><sup>c<sub>i</sub></sup>b<sub>i</sub> where<br><span>
