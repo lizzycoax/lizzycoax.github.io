@@ -1,110 +1,147 @@
-definition
-
-f1+N(0, n) = n
-f1+N(1, n) = S(n)
-f1+N(1+ωN+1g1+N(0)+a, n) = f1+N1+a(ωN+1g1+N(0), n) aka (f1+N(ωN+1g1+N(0), .))1+a(n)
-f1+N(1+g1+N(ωN+1c+1(b+1)), n) = f1+N(g1+N(ωN+1c+1b+ωN+1c(ωN+n)), 0)
-g1+N(x) is either x or any normal form of f1+N where at some point nm (where i >= m >= 1) = x and all nl (where m > l) = 0
-ωN+1 > a
-ωN+1 > b
-ωN+2 > c
-N >= 0
-
-for f0 (N = -1), the definition is the same except the ordinal that would be ω-1 is replaced with a natural number (the base)
-
-small and large hydra ordinal
-
-the small hydra ordinal is h where
-h is f1(f2(...fi(ωi, 1)..., 0), 0)
-i is the omega fixed point a |-> ωa
-
-the large hydra ordinal is h where
-h is the fixed point h |-> f1(f2(...fi(ωi, 1)..., 0), 0)
-i is the h-th omega fixed point a |-> ωa
-
-normal form
-
-the normal form for nonzero ordinals is f1+N(h1+f1+N(h2+...f1+N(hi+a, 0)+ni..., 0)+n2, 0)+n1 where
-ωN > nm
-ωN > a > 0
-hm = ωN+1c1b1+ωN+1c2b2+...+ωN+1cjbj where
-ωN > bm
-ωN+2 > cm > cm+1 > 0
-ω > j > 0
-N >= 0
-ω > i
-
-results
-
-f1(1, n) = n+1
-
-f1(a, n) = n+a where Ω > a
-f1(a, n) = f1a(1, n) = n+a
-
-f1(Ω+a, n) = ω(1+a)+n where Ω > a
-f1(Ω, n) = f(ω+n, 0) = ω+n
-f1(Ω+a, n) = f11+a(Ω, n) = ω(1+a)+n
-
-f1(Ω2+a, n) = ω1+a(ω+n) where Ω > a
-f1(Ω2, n) = f1(Ω+ω+n, 0) = ω(ω+n)
-f1(Ω2+a, n) = f11+a(Ω2, n) = ω1+a(ω+n)
-
-f1(Ω3+a, n) = (ω.)1+a(ω+n) where Ω > a
-f1(Ω3, n) = f1(Ω2+ω+n, 0) = ωω+n
-f1(Ω3+a, n) = f11+a(Ω3, n) = (ω.)1+a(ω+n)
-
-f1(Ω4+a, n) = (ε.)1+a(n) where Ω > a
-f1(Ω4, n) = f1(Ω3+ω+n, 0) = (ω.)ω+n(ω) = εn
-f1(Ω4+a, n) = f11+a(Ω4, n) = (ε.)1+a(n)
-
-f1(Ω(2+b)+a, n) = (ω[b].)1+a(ω+n) where Ω > a and Ω > b
-f1(Ω(2+b+1), n) = f1(Ω(2+b)+ω+n, 0) = (ω[b].)ω+n(ω) = ω[b+1](ω+n)
-f1(Ω(2+b+1)+a, n) = f11+a(Ω(2+b+1), n) = (ω[b+1].)1+a(ω+n)
-
-f1(Ω2+a, n) = (φ.(0))1+a(ω+n) where Ω > a
-f1(Ω2, n) = f1(Ω(ω+n), 0) = ω[ω+n]ω = φω+n(0)
-f1(Ω2+a, n) = f11+a(Ω2, n) = (φ.(0))1+a(ω+n)
-
-f1(Ω2+Ω+a, n) = (Γ.)1+a(n) where Ω > a
-f1(Ω2+Ω, n) = f1(Ω2+ω+n, 0) = (φ.(0))ω+nω = Γn
-f1(Ω2+Ω+a, n) = f11+a(Ω2+Ω, n) = (Γ.)1+a(n)
-
-f1(Ω2+Ωb+a, n) = (φ(b, ., 0))1+a(n) where Ω > a and Ω > b
-f1(Ω2+Ω(b+1), n) = f1(Ω2+Ωb+ω+n, 0) = (φ(b, ., 0))ω+n(0) = φ(b+1, n, 0)
-f1(Ω2+Ωb+a, n) = f11+a(Ω2+Ωb, n) = (φ(b, ., 0))1+a(n)
-
-more results
-
-f1(Ω2+Ω, 0) = Γ0
-f1(Ω22+Ω, 0) = AO (ackermann ordinal)
-f1(Ω3, 0) = SVO
-f1(Ω3+Ω, 0) = LVO
-f1(Ω22, n) = f1(Ω2+Ω(ω+n), 0) = φ(ω+n, 0, 0)
-f1(Ω22+Ω, 0) = f1(Ω22+ω, 0) = (φ(., 0, 0))ω(ω) = φ(1, 0, 0, 0) = AO (ackermann ordinal)
-f1(Ω2(b+1), n) = f1(Ω2b+Ω(ω+n), 0) = φ((., 0)b(ω+n, 0))
-f1(Ω3, 0) = φ((., 0)ω(1)) = SVO
-f1(Ω3+a, 0) = (φ((., 0).(1)))1+a(ω)
-f1(Ω3+Ω, 0) = (φ((., 0).(1)))ω(ω) = LVO
-
-f1(Ω4, 0) = BHO
-f1(Ω5, 0) = ψ(Ω)
-f1(Ω(4+b), 0) = ψ(Ωb)
-f1(Ω2, 0) = ψ(Ωω)
-f1(Ω2+Ω, 0) = ψ(ΩΩ)
-f1(Ω2(1+b), 0) = ψ(ΩΩbω)
-f1(Ω2(1+b)+Ω, 0) = ψ(ΩΩ1+b)
-f1(Ω3, 0) = ψ(ΩΩω)
-f1(Ω3+Ω, 0) = ψ(ΩΩΩ)
-f1(Ω3(1+b), 0) = ψ((Ωω+.)2+b(0))
-f1(Ω3(1+b)+Ω, 0) = ψ((Ω.)2+b(Ω))
-f1(Ω4, 0) = ψ(εΩ+1) = BHO
-
-f1(Ω4+Ω2ω, 0) = BO
-f1(Ω4+Ω2ω, 1) = TFBO
-f1(Ω4, n) = ψ(εΩ+1+n) = ψ(ψ1(1+n))
-f1(Ω4+1, n) = ψ(εΩ+ψ(εΩ+1+n)) = ψ(ψ1(ψ(ψ1(1+n))))
-f1(Ω4+a, n) = (ψ(εΩ+1+.))1+a(n) = (ψ(ψ1(1+.)))1+a(n)
-f1(Ω4+Ω, n) = ψ(εΩ+εΩ+n) = ψ(ψ1(ψ1(n)))
-f1(Ω4+Ω2, n) = ψ(εΩ2+n) = ψ(ψ2(n))
-f1(Ω4+Ω2ω, 0) = ψ(Ωω) = ψ(ψω(0)) = BO
-f1(Ω4+Ω2ω, 1) = ψ(εΩω+1) = ψ(ψω(1)) = TFBO
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Hydra ordinal collapsing function</title>
+<meta name="color-scheme" content="dark light">
+<style>
+p {
+	font-family: "jetbrains mono", "courier new";
+}
+span {
+	display: block;
+	margin-left: 1em;
+}
+</style>
+</head>
+<body>
+<p>
+	definition<br>
+	<br>
+	f<sub>1+N</sub>(0, n) = n<br>
+	f<sub>1+N</sub>(1, n) = S(n)<br>
+	f<sub>1+N</sub>(1+ω<sub>N+1</sub>g<sub>1+N</sub>(0)+a, n) = f<sub>1+N</sub><sup>1+a</sup>(ω<sub>N+1</sub>g<sub>1+N</sub>(0), n) aka (f<sub>1+N</sub>(ω<sub>N+1</sub>g<sub>1+N</sub>(0), .))<sup>1+a</sup>(n)<br>
+	f<sub>1+N</sub>(1+g<sub>1+N</sub>(ω<sub>N+1</sub><sup>c+1</sup>(b+1)), n) = f<sub>1+N</sub>(g<sub>1+N</sub>(ω<sub>N+1</sub><sup>c+1</sup>b+ω<sub>N+1</sub><sup>c</sup>(ω<sub>N</sub>+n)), 0)<br><span>
+		g<sub>1+N</sub>(x) is either x or any normal form of f<sub>1+N</sub> where at some point n<sub>m</sub> (where i >= m >= 1) = x and all n<sub>l</sub> (where m > l) = 0<br>
+		ω<sub>N+1</sub> > a<br>
+		ω<sub>N+1</sub> > b<br>
+		ω<sub>N+2</sub> > c<br>
+		N >= 0<br>
+	</span>
+	<br>
+	for f<sub>0</sub> (N = -1), the definition is the same except the ordinal that would be ω<sub>-1</sub> is replaced with a natural number (the base)<br>
+	<br>
+	small and large hydra ordinal<br>
+	<br>
+	the small hydra ordinal is h where<br><span>
+		h is f<sub>1</sub>(f<sub>2</sub>(...f<sub>i</sub>(ω<sub>i</sub>, 1)..., 0), 0)<br>
+		i is the omega fixed point a |-> ω<sub>a</sub><br>
+	</span>
+	<br>
+	the large hydra ordinal is h where<br><span>
+		h is the fixed point h |-> f<sub>1</sub>(f<sub>2</sub>(...f<sub>i</sub>(ω<sub>i</sub>, 1)..., 0), 0)<br>
+		i is the h-th omega fixed point a |-> ω<sub>a</sub><br>
+	</span>
+	<br>
+	normal form<br>
+	<br>
+	the normal form for nonzero ordinals  is f<sub>1+N</sub>(h<sub>1</sub>+f<sub>1+N</sub>(h<sub>2</sub>+...f<sub>1+N</sub>(h<sub>i</sub>+a, 0)+n<sub>i</sub>..., 0)+n<sub>2</sub>, 0)+n<sub>1</sub> where<br><span>
+		ω<sub>N</sub> > n<sub>m</sub><br>
+		ω<sub>N</sub> > a > 0<br>
+		h<sub>m</sub> = ω<sub>N+1</sub><sup>c<sub>1</sub></sup>b<sub>1</sub>+ω<sub>N+1</sub><sup>c<sub>2</sub></sup>b<sub>2</sub>+...+ω<sub>N+1</sub><sup>c<sub>j</sub></sup>b<sub>j</sub> where<br><span>
+			ω<sub>N</sub> > b<sub>m</sub><br>
+			ω<sub>N+2</sub> > c<sub>m</sub> > c<sub>m+1</sub> > 0<br>
+			ω > j > 0<br>
+		</span>
+		N >= 0<br>
+		ω > i<br>
+	</span>
+	<br>
+	results<br>
+	<br>
+	f<sub>1</sub>(1, n) = n+1<br>
+	<br>
+	f<sub>1</sub>(a, n) = n+a where Ω > a<br><span>
+		f<sub>1</sub>(a, n) = f<sub>1</sub><sup>a</sup>(1, n) = n+a<br>
+	</span>
+	<br>
+	f<sub>1</sub>(Ω+a, n) = ω(1+a)+n where Ω > a<br><span>
+		f<sub>1</sub>(Ω, n) = f(ω+n, 0) = ω+n<br>
+		f<sub>1</sub>(Ω+a, n) = f<sub>1</sub><sup>1+a</sup>(Ω, n) = ω(1+a)+n<br>
+	</span>
+	<br>
+	f<sub>1</sub>(Ω2+a, n) = ω<sup>1+a</sup>(ω+n) where Ω > a<br><span>
+		f<sub>1</sub>(Ω2, n) = f<sub>1</sub>(Ω+ω+n, 0) = ω(ω+n)<br>
+		f<sub>1</sub>(Ω2+a, n) = f<sub>1</sub><sup>1+a</sup>(Ω2, n) = ω<sup>1+a</sup>(ω+n)<br>
+	</span>
+	<br>
+	f<sub>1</sub>(Ω3+a, n) = (ω<sup>.</sup>)<sup>1+a</sup>(ω+n) where Ω > a<br><span>
+		f<sub>1</sub>(Ω3, n) = f<sub>1</sub>(Ω2+ω+n, 0) = ω<sup>ω+n</sup><br>
+		f<sub>1</sub>(Ω3+a, n) = f<sub>1</sub><sup>1+a</sup>(Ω3, n) = (ω<sup>.</sup>)<sup>1+a</sup>(ω+n)<br>
+	</span>
+	<br>
+	f<sub>1</sub>(Ω4+a, n) = (ε<sub>.</sub>)<sup>1+a</sup>(n) where Ω > a<br><span>
+		f<sub>1</sub>(Ω4, n) = f<sub>1</sub>(Ω3+ω+n, 0) = (ω<sup>.</sup>)<sup>ω+n</sup>(ω) = ε<sub>n</sub><br>
+		f<sub>1</sub>(Ω4+a, n) = f<sub>1</sub><sup>1+a</sup>(Ω4, n) = (ε<sub>.</sub>)<sup>1+a</sup>(n)<br>
+	</span>
+	<br>
+	f<sub>1</sub>(Ω(2+b)+a, n) = (ω[b].)<sup>1+a</sup>(ω+n) where Ω > a and Ω > b<br><span>
+		f<sub>1</sub>(Ω(2+b+1), n) = f<sub>1</sub>(Ω(2+b)+ω+n, 0) = (ω[b].)<sup>ω+n</sup>(ω) = ω[b+1](ω+n)<br>
+		f<sub>1</sub>(Ω(2+b+1)+a, n) = f<sub>1</sub><sup>1+a</sup>(Ω(2+b+1), n) = (ω[b+1].)<sup>1+a</sup>(ω+n)<br>
+	</span>
+	<br>
+	f<sub>1</sub>(Ω<sup>2</sup>+a, n) = (φ<sub>.</sub>(0))<sup>1+a</sup>(ω+n) where Ω > a<br><span>
+		f<sub>1</sub>(Ω<sup>2</sup>, n) = f<sub>1</sub>(Ω(ω+n), 0) = ω[ω+n]ω = φ<sub>ω+n</sub>(0)<br>
+		f<sub>1</sub>(Ω<sup>2</sup>+a, n) = f<sub>1</sub><sup>1+a</sup>(Ω<sup>2</sup>, n) = (φ<sub>.</sub>(0))<sup>1+a</sup>(ω+n)<br>
+	</span>
+	<br>
+	f<sub>1</sub>(Ω<sup>2</sup>+Ω+a, n) = (Γ<sub>.</sub>)<sup>1+a</sup>(n) where Ω > a<br><span>
+		f<sub>1</sub>(Ω<sup>2</sup>+Ω, n) = f<sub>1</sub>(Ω<sup>2</sup>+ω+n, 0) = (φ<sub>.</sub>(0))<sup>ω+n</sup>ω = Γ<sub>n</sub><br>
+		f<sub>1</sub>(Ω<sup>2</sup>+Ω+a, n) = f<sub>1</sub><sup>1+a</sup>(Ω<sup>2</sup>+Ω, n) = (Γ<sub>.</sub>)<sup>1+a</sup>(n)<br>
+	</span>
+	<br>
+	f<sub>1</sub>(Ω<sup>2</sup>+Ωb+a, n) = (φ(b, ., 0))<sup>1+a</sup>(n) where Ω > a and Ω > b<br><span>
+		f<sub>1</sub>(Ω<sup>2</sup>+Ω(b+1), n) = f<sub>1</sub>(Ω<sup>2</sup>+Ωb+ω+n, 0) = (φ(b, ., 0))<sup>ω+n</sup>(0) = φ(b+1, n, 0)<br>
+		f<sub>1</sub>(Ω<sup>2</sup>+Ωb+a, n) = f<sub>1</sub><sup>1+a</sup>(Ω<sup>2</sup>+Ωb, n) = (φ(b, ., 0))<sup>1+a</sup>(n)<br>
+	</span>
+	<br>
+	more results<br>
+	<br>
+	f<sub>1</sub>(Ω<sup>2</sup>+Ω, 0) = Γ<sub>0</sub><br>
+	f<sub>1</sub>(Ω<sup>2</sup>2+Ω, 0) = AO (ackermann ordinal)<br>
+	f<sub>1</sub>(Ω<sup>3</sup>, 0) = SVO<br>
+	f<sub>1</sub>(Ω<sup>3</sup>+Ω, 0) = LVO<br><span>
+		f<sub>1</sub>(Ω<sup>2</sup>2, n) = f<sub>1</sub>(Ω<sup>2</sup>+Ω(ω+n), 0) = φ(ω+n, 0, 0)<br>
+		f<sub>1</sub>(Ω<sup>2</sup>2+Ω, 0) = f<sub>1</sub>(Ω<sup>2</sup>2+ω, 0) = (φ(., 0, 0))<sup>ω</sup>(ω) = φ(1, 0, 0, 0) = AO (ackermann ordinal)<br>
+		f<sub>1</sub>(Ω<sup>2</sup>(b+1), n) = f<sub>1</sub>(Ω<sup>2</sup>b+Ω(ω+n), 0) = φ((., 0)<sup>b</sup>(ω+n, 0))<br>
+		f<sub>1</sub>(Ω<sup>3</sup>, 0) = φ((., 0)<sup>ω</sup>(1)) = SVO<br>
+		f<sub>1</sub>(Ω<sup>3</sup>+a, 0) = (φ((., 0)<sup>.</sup>(1)))<sup>1+a</sup>(ω)<br>
+		f<sub>1</sub>(Ω<sup>3</sup>+Ω, 0) = (φ((., 0)<sup>.</sup>(1)))<sup>ω</sup>(ω) = LVO<br>
+	</span>
+	<br>
+	f<sub>1</sub>(Ω<sup>4</sup>, 0) = BHO<br><span>
+		f<sub>1</sub>(Ω5, 0) = ψ(Ω)<br>
+		f<sub>1</sub>(Ω(4+b), 0) = ψ(Ω<sup>b</sup>)<br>
+		f<sub>1</sub>(Ω<sup>2</sup>, 0) = ψ(Ω<sup>ω</sup>)<br>
+		f<sub>1</sub>(Ω<sup>2</sup>+Ω, 0) = ψ(Ω<sup>Ω</sup>)<br>
+		f<sub>1</sub>(Ω<sup>2</sup>(1+b), 0) = ψ(Ω<sup>Ω<sup>b</sup>ω</sup>)<br>
+		f<sub>1</sub>(Ω<sup>2</sup>(1+b)+Ω, 0) = ψ(Ω<sup>Ω<sup>1+b</sup></sup>)<br>
+		f<sub>1</sub>(Ω<sup>3</sup>, 0) = ψ(Ω<sup>Ω<sup>ω</sup></sup>)<br>
+		f<sub>1</sub>(Ω<sup>3</sup>+Ω, 0) = ψ(Ω<sup>Ω<sup>Ω</sup></sup>)<br>
+		f<sub>1</sub>(Ω<sup>3</sup>(1+b), 0) = ψ((Ω<sup>ω+.</sup>)<sup>2+b</sup>(0))<br>
+		f<sub>1</sub>(Ω<sup>3</sup>(1+b)+Ω, 0) = ψ((Ω<sup>.</sup>)<sup>2+b</sup>(Ω))<br>
+		f<sub>1</sub>(Ω<sup>4</sup>, 0) = ψ(ε<sub>Ω+1</sub>) = BHO<br>
+	</span>
+	<br>
+	f<sub>1</sub>(Ω<sup>4</sup>+Ω<sup>2</sup>ω, 0) = BO<br>
+	f<sub>1</sub>(Ω<sup>4</sup>+Ω<sup>2</sup>ω, 1) = TFBO<br><span>
+		f<sub>1</sub>(Ω<sup>4</sup>, n) = ψ(ε<sub>Ω+1+n</sub>) = ψ(ψ<sub>1</sub>(1+n))<br>
+		f<sub>1</sub>(Ω<sup>4</sup>+1, n) = ψ(ε<sub>Ω+ψ(ε<sub>Ω+1+n</sub>)</sub>) = ψ(ψ<sub>1</sub>(ψ(ψ<sub>1</sub>(1+n))))<br>
+		f<sub>1</sub>(Ω<sup>4</sup>+a, n) = (ψ(ε<sub>Ω+1+.</sub>))<sup>1+a</sup>(n) = (ψ(ψ<sub>1</sub>(1+.)))<sup>1+a</sup>(n)<br>
+		f<sub>1</sub>(Ω<sup>4</sup>+Ω, n) = ψ(ε<sub>Ω+ε<sub>Ω+n</sub></sub>) = ψ(ψ<sub>1</sub>(ψ<sub>1</sub>(n)))<br>
+		f<sub>1</sub>(Ω<sup>4</sup>+Ω<sup>2</sup>, n) = ψ(ε<sub>Ω<sub>2</sub>+n</sub>) = ψ(ψ<sub>2</sub>(n))<br>
+		f<sub>1</sub>(Ω<sup>4</sup>+Ω<sup>2</sup>ω, 0) = ψ(Ω<sub>ω</sub>) = ψ(ψ<sub>ω</sub>(0)) = BO<br>
+		f<sub>1</sub>(Ω<sup>4</sup>+Ω<sup>2</sup>ω, 1) = ψ(ε<sub>Ω<sub>ω</sub>+1</sub>) = ψ(ψ<sub>ω</sub>(1)) = TFBO<br>
+	</span>
+</p>
+</body>
+</html>
