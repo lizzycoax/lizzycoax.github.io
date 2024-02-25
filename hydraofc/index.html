@@ -14,20 +14,16 @@ span {
 </style>
 </head>
 <body>
-<h1>
-	The Hydra ordinal collapsing function
-</h1>
-<p>
-	a notation that i made to give a scale to function like Veblen function and Bachmann's ordinal collapsing function when i was learning about them, which i then formalised into a function
-</p>
+<h1>The Hydra ordinal collapsing function</h1>
+<p>a notation that i made to give a scale to function like Veblen function and Bachmann's ordinal collapsing function when i was learning about them, which i then formalised into a function</p>
 <p>
 	definition<br>
 	<br>
 	f<sub>1+N</sub>(0, n) = n<br>
 	f<sub>1+N</sub>(1, n) = S(n)<br>
-	f<sub>1+N</sub>(1+ω<sub>N+1</sub>g<sub>1+N</sub>(0)+a, n) = f<sub>1+N</sub><sup>1+a</sup>(ω<sub>N+1</sub>g<sub>1+N</sub>(0), n) aka (f<sub>1+N</sub>(ω<sub>N+1</sub>g<sub>1+N</sub>(0), .))<sup>1+a</sup>(n)<br>
-	f<sub>1+N</sub>(1+g<sub>1+N</sub>(ω<sub>N+1</sub><sup>c+1</sup>(b+1)), n) = f<sub>1+N</sub>(g<sub>1+N</sub>(ω<sub>N+1</sub><sup>c+1</sup>b+ω<sub>N+1</sub><sup>c</sup>(ω<sub>N</sub>+n)), 0)<br><span>
-		g<sub>1+N</sub>(x) is either x or any normal form of f<sub>1+N</sub> where at some point n<sub>m</sub> (where i >= m >= 1) = x and all n<sub>l</sub> (where m > l) = 0<br>
+	f<sub>1+N</sub>(1+ω<sub>N+1</sub>c+a, n) = f<sub>1+N</sub><sup>1+a</sup>(ω<sub>N+1</sub>c, n) aka (f<sub>1+N</sub>(ω<sub>N+1</sub>c, .))<sup>1+a</sup>(n)<br>
+	f<sub>1+N</sub>(1+g<sub>1+N</sub>(ω<sub>N+1</sub>(b+1)), n) = f<sub>1+N</sub>(g<sub>1+N</sub>(ω<sub>N+1</sub>b+ω<sub>N</sub>+n), 0)<br><span>
+		g<sub>1+N</sub>(x) is x, g<sub>1+N</sub>(y + x) where ω<sub>N+2</sub> > y >= xω<sub>N+1</sub> or g<sub>1+N</sub>(f<sub>1+N+1</sub>(ω<sub>N+2</sub>z+x, 0)) where ω<sub>N+3</sub> > z >= 0<br>
 		ω<sub>N+1</sub> > a<br>
 		ω<sub>N+1</sub> > b<br>
 		ω<sub>N+2</sub> > c<br>
@@ -39,28 +35,40 @@ span {
 	small and large hydra ordinal<br>
 	<br>
 	the small hydra ordinal is h where<br><span>
-		h is f<sub>1</sub>(f<sub>2</sub>(...f<sub>i</sub>(ω<sub>i</sub>, 1)..., 0), 0)<br>
+		h is f<sub>1</sub>(f<sub>2</sub>(...f<sub>i</sub>(ω<sub>i+1</sub>, 1)..., 0), 0)<br>
 		i is the omega fixed point a |-> ω<sub>a</sub><br>
 	</span>
 	<br>
 	the large hydra ordinal is h where<br><span>
-		h is the fixed point h |-> f<sub>1</sub>(f<sub>2</sub>(...f<sub>i</sub>(ω<sub>i</sub>, 1)..., 0), 0)<br>
+		h is the fixed point h |-> f<sub>1</sub>(f<sub>2</sub>(...f<sub>i</sub>(ω<sub>i+1</sub>, 1)..., 0), 0)<br>
 		i is the h-th omega fixed point a |-> ω<sub>a</sub><br>
 	</span>
 	<br>
 	normal form<br>
 	<br>
-	the normal form for nonzero ordinals  is f<sub>1+N</sub>(h<sub>1</sub>+f<sub>1+N</sub>(h<sub>2</sub>+...f<sub>1+N</sub>(h<sub>i</sub>+a, 0)+n<sub>i</sub>..., 0)+n<sub>2</sub>, 0)+n<sub>1</sub> where<br><span>
-		ω<sub>N</sub> > n<sub>m</sub><br>
-		ω<sub>N</sub> > a > 0<br>
-		h<sub>m</sub> >= ω<sub>N+1</sub><br>
-		h<sub>m</sub> = ω<sub>N+1</sub><sup>c<sub>1</sub></sup>b<sub>1</sub>+ω<sub>N+1</sub><sup>c<sub>2</sub></sup>b<sub>2</sub>+...+ω<sub>N+1</sub><sup>c<sub>j</sub></sup>b<sub>j</sub> where<br><span>
-			ω<sub>N</sub> > b<sub>m</sub><br>
-			ω<sub>N+2</sub> > c<sub>m</sub> > c<sub>m+1</sub> > 0<br>
-			ω > j > 0<br>
+	the normal form for a where N >= 0 is:<br><span>
+		if a = 0: 0<br>
+		else if ω > a > 0: f<sub>1+N</sub>(c, 1) where<br><span>
+			ω > c<br>
 		</span>
-		N >= 0<br>
-		ω > i<br>
+		else if ω<sub>N+1</sub> > a >= ω<sub>N</sub>:<br><span>
+			if ω<sub>N</sub><sup>2</sup> > a: f<sub>1+N</sub>(ω<sub>N+1</sub>+c, b) where<br><span>
+				ω<sub>N</sub> > b<br>
+				ω<sub>N</sub> > c<br>
+			</span>
+			else if ω<sub>N</sub><sup>ω<sub>N</sub></sup> > a >= ω<sub>N</sub><sup>2</sup>: f<sub>1+N</sub>(ω<sub>N+1</sub>2, b)+d where<br><span>
+				ω<sub>N+1</sub> > b<br>
+				ω<sub>N</sub> > d<br>
+			</span>
+			else: f<sub>1+N</sub>(ω<sub>N+1</sub>c<sub>1</sub>, b<sub>1</sub>)+f<sub>1+N</sub>(ω<sub>N+1</sub>c<sub>2</sub>, b<sub>2</sub>)+...+f<sub>1+N</sub>(ω<sub>N+1</sub>c<sub>k</sub>, b<sub>k</sub>)+d<sup>[NF]</sup> where<br><span>
+				ω<sub>N+1</sub> > b<sub>n</sub><br>
+				ω<sub>N+2</sub> > c<sub>n</sub> >= 3<br>
+				ω<sub>N</sub><sup>ω<sub>N</sub></sup> > d<br>
+				ω > k > 0<br>
+				f<sub>1+N</sub>(ω<sub>N+1</sub>c<sub>m</sub>, b<sub>m</sub>) >= f<sub>1+N</sub>(ω<sub>N+1</sub>c<sub>m+1</sub>, b<sub>m+1</sub>)<br>
+				f<sub>1+N</sub>(ω<sub>N+1</sub>c<sub>m</sub>, b<sub>m</sub>) > b<sub>m</sub><br>
+			</span>
+		</span>
 	</span>
 	<br>
 	results<br>
