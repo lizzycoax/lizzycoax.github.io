@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Alpha growth</title>
+<meta name="color-scheme" content="dark light">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="alignCenter">
+	<p>You have
+		<span class="bigText">
+			<span class="amountText"><span id="amount">0</span></span>α
+		</span>
+	</p>
+	<p>
+		You are getting +<span id="growerProd0" class="amountText">0</span>α/s<br>
+	</p>
+</div>
+<div id="gameDiv">
+	<div class="divSection"><div class="innerDivSection">
+		<hr>
+		<h3>Alpha growers</h3>
+		<p class="flex-container">
+			<span class="flex-item" style="flex-grow: 1">
+				β<sub>1</sub><br>
+				×<span id="growerMult1" class="amountText">1</span>
+			</span>
+			<span class="flex-item" style="flex-grow: 2">
+				<span id="growerAmo1" class="amountText"><span>0</span></span><br>
+				+<span id="growerProd1" class="amountText">0</span>/s
+			</span>
+			<button id="growerBut1" onclick="grower1()"
+				class="flex-item" style="flex-grow: 1">
+				Buy <span id="growerBuys1" class="amountText">1</span><br>
+				Cost: <span id="growerCost1" class="amountText">0</span>α
+			</button>
+		</p>
+		<p class="flex-container">
+			<span class="flex-item" style="flex-grow: 1">
+				β<sub>2</sub><br>
+				×<span id="growerMult2" class="amountText">1</span>
+			</span>
+			<span class="flex-item" style="flex-grow: 2">
+				<span id="growerAmo2" class="amountText">0</span><br>
+				+<span id="growerProd2" class="amountText">0</span>/s
+			</span>
+			<button id="growerBut2" onclick="grower2()"
+				class="flex-item" style="flex-grow: 1">
+				Buy <span id="growerBuys2" class="amountText">1</span><br>
+				Cost: <span id="growerCost2" class="amountText">0</span>α
+			</button>
+		</p>
+		<p class="flex-container">
+			<span class="flex-item" style="flex-grow: 1">
+				β<sub>3</sub><br>
+				×<span id="growerMult3" class="amountText">1</span>
+			</span>
+			<span class="flex-item" style="flex-grow: 2">
+				<span id="growerAmo3" class="amountText">0</span><br>
+				+<span id="growerProd3" class="amountText">0</span>/s
+			</span>
+			<button id="growerBut3" onclick="grower3()"
+				class="flex-item" style="flex-grow: 1">
+				Buy <span id="growerBuys3" class="amountText">1</span><br>
+				Cost: <span id="growerCost3" class="amountText">0</span>α
+			</button>
+		</p>
+		<p class="flex-container">
+			<span class="flex-item" style="flex-grow: 1">
+				β<sub>4</sub><br>
+				×<span id="growerMult4" class="amountText">1</span>
+			</span>
+			<span class="flex-item" style="flex-grow: 2">
+				<span id="growerAmo4" class="amountText">0</span><br>
+				+<span id="growerProd4" class="amountText">0</span>/s
+			</span>
+			<button id="growerBut4" onclick="grower4()"
+				class="flex-item" style="flex-grow: 1">
+				Buy <span id="growerBuys4" class="amountText">1</span><br>
+				Cost: <span id="growerCost4" class="amountText">0</span>α
+			</button>
+		</p>
+	</div></div>
+</div>
+<script src="bignum.js"></script>
+<script src="bignot.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
