@@ -1,0 +1,287 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>BIGNUM</title>
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!--OUTPUT-->
+	<div id="output segment" class="segment" style="width: 100%; color: #00ff00" hidden>
+	<div style="border: 0.5em dotted #00ff00">
+	<div class="segment-inside" style="border: 0.5em dotted #00ff00">
+	<!--TOP TEXT-->
+		<div class="top-text" style="height: 10em">
+		<p class="center">
+		<span>output:</span>
+		<span class="biggertext" id="output"></span>
+		<br>
+		<span>best:</span>
+		<span class="bigtext" id="best"></span>
+		</div>
+	<!--BUTTONS-->
+		<div class="buttons center" style="height: 2em">
+		<button id="pre-hyper button" onclick="changeView(0)" class="bigtext" style="color: #00ffff; border-color: #7f00ff">pre-hyper</button>
+		<button id="post-hyper button" onclick="changeView(1)" class="bigtext" style="color: #00ffff; border-color: #ff007f">post-hyper</button>
+		</div>
+	</div>
+	</div>
+	</div>
+<!--DIMENSIONS-->
+	<div id="dimensions" class="segment" style="width: 100%; color: #7f00ff">
+	<div style="border: 0.5em dotted #7f00ff">
+	<div class="segment-inside" style="border: 0.5em dotted #7f00ff">
+	<!--TOP TEXT-->
+		<div id="dimension top text" class="top-text">
+		<p class="center">
+		<span>power:</span>
+		<span id="power" class="biggertext">0.000</span>
+		<br>
+		<span id="power goal text">
+		goal:
+		<span id="power goal" class="bigtext">9.007q</span>
+		</span>
+		<button id="dimensions hypershift button" onclick="hypershiftEvent()" class="bigtext" style="color: #00ffff; border-color: #00ffff" hidden>HYPERSHIFT</button>
+		</p>
+		</div>
+	<!--BUTTONS-->
+		<div class="buttons">
+		<p id="dimension top buttons" style="height: 2em">
+		<span style="color: #ffdf00">add new dimension</span>
+		<button id="add dimension button" onclick="addDimensionEvent()"><span id="add dimension cost">cost: free!</span></button>
+		<span style="float: right">
+		<button id="dimension upgrade button" onclick="upgradeDimensionEvent()" style="color: #00ffff; border-color: #00ffff">upgrade all</button>
+		</span>
+		</p>
+		<p id="dimension 1" style="color: #ff007f" hidden>
+		<span>
+		dimension 1:
+		<span id="dimension amount 1"></span>
+		<br>
+		<span id="dimension mult 1"></span>
+		<span id="dimension upgrade 1" style="float: right">
+		<span style="color: #ffdf00">upgrade</span>
+		<button id="dimension upgrade button 1" onclick="upgradeDimensionEvent(1)"></button>
+		</span>
+		</p>
+		<p id="dimension 2" style="color: #ff7f00" hidden>
+		dimension 2:
+		<span id="dimension amount 2"></span>
+		<br>
+		<span id="dimension mult 2"></span>
+		<span id="dimension upgrade 2" style="float: right">
+		<span style="color: #ffdf00">upgrade</span>
+		<button id="dimension upgrade button 2" onclick="upgradeDimensionEvent(2)"></button>
+		</span>
+		</p>
+		<p id="dimension 3" style="color: #7fff00" hidden>
+		dimension 3:
+		<span id="dimension amount 3"></span>
+		<br>
+		<span id="dimension mult 3"></span>
+		<span id="dimension upgrade 3" style="float: right">
+		<span style="color: #ffdf00">upgrade</span>
+		<button id="dimension upgrade button 3" onclick="upgradeDimensionEvent(3)"></button>
+		</span>
+		</p>
+		<p id="dimension 4" style="color: #00ff7f" hidden>
+		dimension 4:
+		<span id="dimension amount 4"></span>
+		<br>
+		<span id="dimension mult 4"></span>
+		<span id="dimension upgrade 4" style="float: right">
+		<span style="color: #ffdf00">upgrade</span>
+		<button id="dimension upgrade button 4" onclick="upgradeDimensionEvent(4)"></button>
+		</span>
+		</p>
+		<p id="dimension 5" style="color: #007fff" hidden>
+		dimension 5:
+		<span id="dimension amount 5"></span>
+		<br>
+		<span id="dimension mult 5"></span>
+		<span id="dimension upgrade 5" style="float: right">
+		<span style="color: #ffdf00">upgrade</span>
+		<button id="dimension upgrade button 5" onclick="upgradeDimensionEvent(5)"></button>
+		</span>
+		</p>
+		<p id="dimension 6" style="color: #7f00ff" hidden>
+		dimension 6:
+		<span id="dimension amount 6"></span>
+		<br>
+		<span id="dimension mult 6"></span>
+		<span id="dimension upgrade 6" style="float: right">
+		<span style="color: #ffdf00">upgrade</span>
+		<button id="dimension upgrade button 6" onclick="upgradeDimensionEvent(6)"></button>
+		</span>
+		</p>
+		<p id="dimension 7" style="color: #ff007f" hidden>
+		dimension 7:
+		<span id="dimension amount 7"></span>
+		<br>
+		<span id="dimension mult 7"></span>
+		<span id="dimension upgrade 7" style="float: right">
+		<span style="color: #ffdf00">upgrade</span>
+		<button id="dimension upgrade button 7" onclick="upgradeDimensionEvent(7)"></button>
+		</span>
+		</p>
+		<p id="dimension 8" style="color: #ff7f00" hidden>
+		dimension 8:
+		<span id="dimension amount 8"></span>
+		<br>
+		<span id="dimension mult 8"></span>
+		<span id="dimension upgrade 8" style="float: right">
+		<span style="color: #ffdf00">upgrade</span>
+		<button id="dimension upgrade button 8" onclick="upgradeDimensionEvent(8)"></button>
+		</span>
+		<p id="dimension 9" style="color: #ff7f00" hidden>
+		dimension θ:
+		<span id="dimension amount 9"></span>
+		<br>
+		<span id="dimension mult 9"></span>
+		<span id="dimension upgrade 9" style="float: right">
+		<span style="color: #ffdf00">upgrade</span>
+		<button id="dimension upgrade button 9" onclick="upgradeDimensionEvent(9)"></button>
+		</span>
+		</p>
+		<p id="dimension 10" style="color: #ff7f00" hidden>
+		dimension ϑ:
+		<span id="dimension amount 10"></span>
+		<br>
+		<span id="dimension mult 10"></span>
+		<span id="dimension upgrade 10" style="float: right">
+		<span style="color: #ffdf00">upgrade</span>
+		<button id="dimension upgrade button 10" onclick="upgradeDimensionEvent(10)"></button>
+		</span>
+		</p>
+		</div>
+	</div>
+	</div>
+	</div>
+<!--HYPERDIMENSIONS-->
+	<div id="hyperdimensions" class="segment" style="width: 25%; color: #ff007f" hidden>
+	<div style="border: 0.5em dotted #ff007f">
+	<div class="segment-inside" style="border: 0.5em dotted #ff007f">
+	<!--TOP TEXT-->
+		<div class="top-text">
+		<div id="hyperdimensions top text">
+		<p class="center">
+		<span>hyperpower:</span>
+		<span id="hyperpower" class="bigtext"></span>
+		<br>
+		<button id="hyperdimensions hypershift button" onclick="hypershiftEvent()" class="bigtext" style="color: #00ffff; border-color: #00ffff" hidden>HYPERSHIFT</button>
+		</p>
+		</div>
+		</div>
+	<!--BUTTONS-->
+		<div id="hyperdimensions buttons" class="buttons">
+		<p style="height: 2em">
+		threshold:
+		<span id="hyperdimension threshold"></span>
+		<span style="float: right">
+		<span style="color: #ffdf00">lower threshold</span>
+		<button id="hyperdimension threshold button" onclick="hyperdimensionThresholdEvent()">cost: 5 hyperpower</button>
+		</span>
+		</p>
+		<p id="hyperdimension 1" style="color: #ff007f">
+		hyperdimension 1:
+		<span id="hyperdimension amount 1"></span>
+		<br>
+		<span class="smalltext"><i>f</i><sub>2</sub></span>
+		</p>
+		<p id="hyperdimension 2" style="color: #ff7f00" hidden>
+		hyperdimension 2:
+		<span id="hyperdimension amount 2"></span>
+		<br>
+		<span class="smalltext"><i>f</i><sub>3</sub></span>
+		</p>
+		<p id="hyperdimension 3" style="color: #7fff00" hidden>
+		hyperdimension 3:
+		<span id="hyperdimension amount 3"></span>
+		<br>
+		<span class="smalltext"><i>f</i><sub>4</sub></span>
+		</p>
+		<p id="hyperdimension 4" style="color: #00ff7f" hidden>
+		hyperdimension 4:
+		<span id="hyperdimension amount 4"></span>
+		<br>
+		<span class="smalltext"><i>f</i><sub>5</sub></span>
+		</p>
+		<p id="hyperdimension 5" style="color: #007fff" hidden>
+		hyperdimension 5:
+		<span id="hyperdimension amount 5"></span>
+		<br>
+		<span class="smalltext"><i>f</i><sub>6</sub></span>
+		</p>
+		<p id="hyperdimension 6" style="color: #7f00ff" hidden>
+		hyperdimension 6:
+		<span id="hyperdimension amount 6"></span>
+		<br>
+		<span class="smalltext"><i>f</i><sub>7</sub></span>
+		</p>
+		</p>
+		<p id="hyperdimension 7" style="color: #ff007f" hidden>
+		hyperdimension 7:
+		<span id="hyperdimension amount 7"></span>
+		<br>
+		<span class="smalltext"><i>f</i><sub>8</sub></span>
+		</p>
+		<p id="hyperdimension 8" style="color: #ff7f00" hidden>
+		hyperdimension 8:
+		<span id="hyperdimension amount 8"></span>
+		<br>
+		<span class="smalltext"><i>f</i><sub>9</sub></span>
+		</p>
+		<p id="hyperdimension 9" style="color: #7fff00" hidden>
+		hyperdimension 9:
+		<span id="hyperdimension amount 9"></span>
+		<br>
+		<span class="smalltext"><i>f</i><sub>10</sub></span>
+		</p>
+		<p id="hyperdimension 10" style="color: #00ff7f" hidden>
+		hyperdimension 10:
+		<span id="hyperdimension amount 10"></span>
+		<br>
+		<span class="smalltext"><i>f</i><sub>11</sub></span>
+		</p>
+		</div>
+	</div>
+	</div>
+	</div>
+<!--OMEGA DIMENSIONS-->
+	<div id="omega dimensions" class="segment" style="width: 25%; color: #bfff00" hidden>
+	<div style="border: 0.5em dotted #bfff00">
+	<div class="segment-inside" style="border: 0.5em dotted #bfff00">
+	<!--TOP TEXT-->
+		<div class="top-text">
+		<p class="center">
+		<span>ω power:</span>
+		<span id="omega power" class="bigtext"></span>
+		</p>
+		</div>
+	<!--BUTTONS-->
+		<div class="buttons">
+		</div>
+	</div>
+	</div>
+	</div>
+<!--HYDRA DIMENSIONS-->
+	<div id="hydra dimensions" class="segment" style="width: 25%; color: #00ffbf" hidden>
+	<div style="border: 0.5em dotted #00ffbf">
+	<div class="segment-inside" style="border: 0.5em dotted #00ffbf">
+	<!--TOP TEXT-->
+		<div class="top-text">
+		<p class="center">
+		<span>φ power:</span>
+		<span id="hydra power" class="bigtext"></span>
+		</p>
+		</div>
+	<!--BUTTONS-->
+		<div class="buttons">
+		</div>
+	</div>
+	</div>
+	</div>
+<script src="bignum.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+﻿.center {
+	text-align: center;
+}
+
+* {
+	font-family: "Jetbrains mono", monospace;
+}
+
+.smalltext {
+	font-size: 0.75em;
+}
+
+.bigtext {
+	font-size: 1.5em;
+}
+
+.biggertext {
+	font-size: 2em;
+}
+
+.segment {
+	float: left;
+}
+
+.segment-inside {
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+.top-text {
+	height: 5em;
+	margin-block: 1em;
+}
+
+.buttons {
+	height: 40em;
+	margin-block: 1em;
+}
+
+button {
+	color: #00ff00;
+	background-color: #000000;
+	border-color: #00ff00;
+}
+
+button:disabled {
+	color: #ff00ff;
+	background-color: #000000;
+	border-color: #ff00ff;
+}
