@@ -12,7 +12,7 @@
 	successive numbers cant come after positional arrays in nestings
 	Infinity indicates a precision cutoff
 	
-	the limit is roughly f_ε_0(precision) fast growing function hierarchy
+	the limit is roughly f_ε_0(precision) in fast growing function hierarchy
 */
 
 /* omg so confusing!! lawl x3 */
@@ -1061,7 +1061,7 @@ class Big {
 }
 
 Big.new = (a) => new Big(a);
-Big.str = (a) => new Big(a).str();
+Big.str = (a, b) => new Big(a).str(b);
 Big.cmp = (a, b) => new Big(a).cmp(b);
 Big.gsp = (a, b) => new Big(a).gsp(b);
 Big.gte = (a, b) => new Big(a).gte(b);
@@ -1072,9 +1072,9 @@ Big.eq = (a, b) => new Big(a).eq(b);
 Big.neq = (a, b) => new Big(a).neq(b);
 Big.max = (a, b) => new Big(a).max(b);
 Big.min = (a, b) => new Big(a).min(b);
-Big.neg = (a, b) => new Big(a).neg(b);
-Big.abs = (a, b) => new Big(a).abs(b);
-Big.inv = (a, b) => new Big(a).inv(b);
+Big.neg = (a) => new Big(a).neg();
+Big.abs = (a) => new Big(a).abs();
+Big.inv = (a) => new Big(a).inv();
 Big.suc = (a) => new Big(a).suc();
 Big.pre = (a) => new Big(a).pre();
 Big.smp = (a, b) => new Big(a).smp(b);
@@ -1085,8 +1085,8 @@ Big.mul = (a, b) => new Big(a).mul(b);
 Big.div = (a, b) => new Big(a).div(b);
 Big.pow = (a, b) => new Big(a).pow(b);
 Big.root = (a, b) => new Big(a).root(b);
-Big.mpow = (a, b) => new Big(a).mpow(b);
-Big.mroot = (a, b) => new Big(a).mroot(b);
+Big.mpow = (a, b, c) => new Big(a).mpow(b, c);
+Big.mroot = (a, b, c) => new Big(a).mroot(b, c);
 Big.exp = (a, b) => new Big(a).exp(b);
 Big.log = (a, b) => new Big(a).log(b);
 Big.tet = (a, b) => new Big(a).tet(b);
