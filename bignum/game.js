@@ -284,7 +284,10 @@ updateDimensionsGui = () => (
 				setText(
 					document.getElementById("dimension upgrade button " + (i + 1)),
 					"cost: " +
-					upgradeDimensionCost(i + 1).mul(upgradeDimensionAmount(i + 1)).str() +
+					upgradeDimensionCost(i + 1).str() +
+					(mul =>
+						mul == 1 ? "" : "×" + mul
+					)(upgradeDimensionAmount(i + 1)) +
 					" power"
 				),
 				setText(
