@@ -1048,6 +1048,16 @@ class Big {
 		}
 		return new Big($big.g(this.val));
 	}
+	grc(b) {
+		if ($big.lt(this.val, 1) || !$big.int(this.val)) {
+			return NaN;
+		}
+		b = new Big(b);
+		if ($big.lt(b.val, 0) || !$big.int(b.val)) {
+			return NaN;
+		}
+		return new Big($big.rec($big.gR(), this.val, b.val));
+	}
 	fgh(o, r) {
 		if ($big.lt(this.val, 0) || !$big.int(this.val)) {
 			return NaN;
@@ -1095,6 +1105,7 @@ Big.hex = (a, b) => new Big(a).hex(b);
 Big.hyp = (a, b, c) => new Big(a).hyp(b, c);
 Big.ack = (a) => new Big(a).ack();
 Big.g = (a) => new Big(a).g();
+Big.grc = (a, b) => new Big(a).grc(b);
 Big.fgh = (a, b, c) => new Big(a).fgh(b, c);
 Big.fun = (a, b, c) => new Big(a).fun(b, c);
 
