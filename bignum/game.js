@@ -286,7 +286,7 @@ updateDimensionsGui = () => (
 					"cost: " +
 					upgradeDimensionCost(i + 1).str() +
 					(mul =>
-						mul == 1 ? "" : "×" + mul
+						mul.eq(1) ? "" : "×" + mul.str(true)
 					)(upgradeDimensionAmount(i + 1)) +
 					" power"
 				),
