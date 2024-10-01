@@ -1,7 +1,7 @@
 <meta name="color-scheme" content="dark light">
 <style>
 p {
-	font-family: "jetbrains mono", "courier new";
+	font-family: "jetbrains mono";
 }
 span {
 	display: block;
@@ -110,11 +110,29 @@ span {
 	f<sub>1</sub>(Ω<sup>3</sup>(1+b)+Ω, 0) = ψ((Ω<sup>.</sup>)<sup>2+b</sup>(Ω))<br>
 	f<sub>1</sub>(Ω<sup>4</sup>, 0) = ψ(ε<sub>Ω+1</sub>) = BHO<br>
 	<br>
-	f<sub>1</sub>(Ω<sup>4</sup>, n) = ψ(ε<sub>Ω+1+n</sub>) = ψ(ψ<sub>1</sub>(1+n))<br>
-	f<sub>1</sub>(Ω<sup>4</sup>+1, n) = ψ(ε<sub>Ω+ψ(ε<sub>Ω+1+n</sub>)</sub>) = ψ(ψ<sub>1</sub>(ψ(ψ<sub>1</sub>(1+n))))<br>
-	f<sub>1</sub>(Ω<sup>4</sup>+a, n) = (ψ(ε<sub>Ω+1+.</sub>))<sup>1+a</sup>(n) = (ψ(ψ<sub>1</sub>(1+.)))<sup>1+a</sup>(n)<br>
-	f<sub>1</sub>(Ω<sup>4</sup>+Ω, n) = ψ(ε<sub>Ω+ε<sub>Ω+n</sub></sub>) = ψ(ψ<sub>1</sub>(ψ<sub>1</sub>(n)))<br>
-	f<sub>1</sub>(Ω<sup>4</sup>+Ω<sup>2</sup>, n) = ψ(ε<sub>Ω<sub>2</sub>+n</sub>) = ψ(ψ<sub>2</sub>(n))<br>
-	f<sub>1</sub>(Ω<sup>4</sup>+Ω<sup>2</sup>ω, 0) = ψ(Ω<sub>ω</sub>) = ψ(ψ<sub>ω</sub>(0)) = BO<br>
-	f<sub>1</sub>(Ω<sup>4</sup>+Ω<sup>2</sup>ω, 1) = ψ(ε<sub>Ω<sub>ω</sub>+1</sub>) = ψ(ψ<sub>ω</sub>(1)) = TFBO<br>
+	f<sub>1</sub>(Ω<sup>4</sup>, n) = ψ(ε<sub>Ω+1+n</sub>) = ψ(ψ<sub>1</sub>(n))<br>
+	f<sub>1</sub>(Ω<sup>4</sup>+1, 0) = ψ(ε<sub>Ω+ψ(ε<sub>Ω+1</sub>)</sub>) = ψ(ψ<sub>1</sub>(ψ(ψ<sub>1</sub>(0))))<br>
+	f<sub>1</sub>(Ω<sup>4</sup>+Ω, 0) = ψ(ε<sub>Ω2</sub>) = ψ(ψ<sub>1</sub>(Ω))<br>
+	f<sub>1</sub>(Ω<sup>4</sup>+Ω<sup>2</sup>, 0) = ψ(ε<sub>Ω<sup>2</sup></sub>) = ψ(ψ<sub>1</sub>(Ω<sup>2</sup>))<br>
+	f<sub>1</sub>(Ω<sup>4</sup>+Ω<sup>3</sup>, 0) = ψ(ε<sub>Ω<sup>Ω</sup></sub>) = ψ(ψ<sub>1</sub>(Ω<sup>Ω</sup>))<br>
+	f<sub>1</sub>(Ω<sup>4</sup>2, 0) = ψ(ε<sub>ε<sub>Ω+1</sub></sub>) = ψ(ψ<sub>1</sub>(ψ<sub>1</sub>(0)))<br>
+	f<sub>1</sub>(Ω<sup>5</sup>, 0) = ψ(ζ<sub>Ω+1</sub>) = ψ(ψ<sub>1</sub>(Ω<sub>2</sub>))<br>
+	f<sub>1</sub>(Ω<sup>6</sup>, 0) = ψ(ψ<sub>1</sub>(Ω<sub>2</sub><sup>2</sup>))<br>
+	f<sub>1</sub>(Ω<sup>Ω</sup>, 0) = ψ(ψ<sub>1</sub>(Ω<sub>2</sub><sup>ω</sup>))<br>
+	f<sub>1</sub>(Ω<sup>Ω</sup>, n) = ψ(ψ<sub>1</sub>(Ω<sub>2</sub><sup>ω+n</sup>))<br>
+	f<sub>1</sub>(Ω<sup>Ω</sup>+1, 0) = ψ(ψ<sub>1</sub>(Ω<sub>2</sub><sup>ψ(ψ<sub>1</sub>(Ω<sub>2</sub><sup>ω</sup>))</sup>))<br>
+	f<sub>1</sub>(Ω<sup>Ω</sup>+Ω, 0) = ψ(ψ<sub>1</sub>(Ω<sub>2</sub><sup>Ω</sup>))<br>
+	f<sub>1</sub>(Ω<sup>Ω</sup>+Ω<sup>2</sup>, 0) = ψ(ψ<sub>1</sub>(Ω<sub>2</sub><sup>Ω<sup>2</sup></sup>))<br>
+	f<sub>1</sub>(Ω<sup>Ω</sup>+Ω<sup>3</sup>, 0) = ψ(ψ<sub>1</sub>(Ω<sub>2</sub><sup>Ω<sup>Ω</sup></sup>))<br>
+	f<sub>1</sub>(Ω<sup>Ω</sup>+Ω<sup>4</sup>, 0) = ψ(ψ<sub>1</sub>(Ω<sub>2</sub><sup>ψ<sub>1</sub>(0)</sup></sup>))<br>
+	f<sub>1</sub>(Ω<sup>Ω</sup>+Ω<sup>5</sup>, 0) = ψ(ψ<sub>1</sub>(Ω<sub>2</sub><sup>ψ<sub>1</sub>(Ω<sub>2</sub>)</sup></sup>))<br>
+	f<sub>1</sub>(Ω<sup>Ω</sup>2, 0) = ψ(ψ<sub>1</sub>(Ω<sub>2</sub><sup>ψ<sub>1</sub>(Ω<sub>2</sub><sup>ω</sup>)</sup></sup>))<br>
+	f<sub>1</sub>(Ω<sup>Ω+1</sup>, 0) = ψ(ψ<sub>1</sub>(Ω<sub>2</sub><sup>Ω<sub>2</sub></sup></sup>))<br>
+	f<sub>1</sub>(Ω<sup>Ω+1</sup>, n) = ψ(ψ<sub>1</sub>(Ω<sub>2</sub><sup>Ω<sub>2</sub>+n</sup></sup>))<br>
+	f<sub>1</sub>(Ω<sup>Ω+1</sup>2, 0) = ψ(ψ<sub>1</sub>(Ω<sub>2</sub><sup>Ω<sub>2</sub>+ψ<sub>1</sub>(Ω<sub>2</sub><sup>ω</sup>)</sup>))<br>
+	f<sub>1</sub>(Ω<sup>Ω+2</sup>, 0) = ψ(ψ<sub>1</sub>(Ω<sub>2</sub><sup>Ω<sub>2</sub>2</sup>))<br>
+	f<sub>1</sub>(Ω<sup>Ω+2</sup>, n) = ψ(ψ<sub>1</sub>(Ω<sub>2</sub><sup>Ω<sub>2</sub>2+n</sup>))<br>
+	f<sub>1</sub>(Ω<sup>Ω+3</sup>, 0) = ψ(ψ<sub>1</sub>(Ω<sub>2</sub><sup>Ω<sub>2</sub>3</sup>))<br>
+	f<sub>1</sub>(Ω<sup>Ω2</sup>, 0) = ψ(ψ<sub>1</sub>(Ω<sub>2</sub><sup>Ω<sub>2</sub>ω</sup>))<br>
+	f<sub>1</sub>(ε<sub>Ω+1</sub>, 0) = BO<br>
 </p>
