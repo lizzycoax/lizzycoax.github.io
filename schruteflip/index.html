@@ -7,12 +7,12 @@ How much money are you willing to pay to play this game?
 <p>money: €<span id="money">1000.00</span></p>
 <p>average gain excluding price: €<span id="average">0.00</span></p>
 <p>highest gain excluding price: €<span id="highest">0.00</span></p>
-<input type="number" id="price" placeholder="price for coin flip"></input>
+<input type="number" id="price" step="0.01" placeholder="price for coin flip"></input>
 <button onclick="flip()">flip coins</button>
 <button onclick="autoflip()">automatically flip coins</button>
 <p id="flips"></p>
 <script>
-money = BigInt(1000);
+money = BigInt(100000);
 average = [0, 0];
 highest = BigInt(0);
 flip = () => (
@@ -22,10 +22,10 @@ flip = () => (
 				money = money - a + c,
 				average = [average[0] * average[1] / (average[1] + 1) + Number(c) / (average[1] + 1), average[1] + 1],
 				highest = c > highest ? c : highest,
-				document.querySelector("#money").innerHTML = money + ".00",
-				document.querySelector("#average").innerHTML = Math.floor(average[0]) + "." + Math.floor(average[0] * 100).toString().substr(-2, 2),
-				document.querySelector("#highest").innerHTML = highest + ".00"
-			))(BigInt(2) ** b),
+				document.querySelector("#money").innerHTML = (a => a.substring(0, a.length - 2) + "." + a.substring(a.length - 2, a.length))(money.toString()),
+				document.querySelector("#average").innerHTML = Math.floor(average[0] / 100) + "." + Math.floor(average[0]).toString().substr(-2, 2),
+				document.querySelector("#highest").innerHTML = (a => a.substring(0, a.length - 2) + "." + a.substring(a.length - 2, a.length))(highest.toString())
+			))(BigInt(2) ** b * BigInt(100)),
 			document.querySelector("#flips").innerHTML = ((f, x) => f(f, x))((f, [c, d]) =>
 				c == b ?
 					d + (d == "" ? "" : "<br>") + "coin flip " + (c + BigInt(1)) + " landed on false, settling on €" + BigInt(2) ** c + ".00" :
@@ -33,7 +33,7 @@ flip = () => (
 			, [BigInt(0), ""])
 		)
 	)(
-		BigInt(document.querySelector("#price").value),
+		BigInt(Math.round(document.querySelector("#price").value * 100)),
 		BigInt(Math.floor(Math.log2(1 / Math.random())))
 	)
 );
