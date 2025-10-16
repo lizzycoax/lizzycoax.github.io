@@ -38,7 +38,7 @@
 		<span>
 			saturation<br>
 			how colorful a color is in proportion to lightness<br>
-			plot shows (hue from 0 to 360, lightness from 0 to 1) at current saturation
+			plot shows (hue from 0 to 400, lightness from 0 to 1) at current saturation
 		</span>
 		<span>
 			hue<br>
@@ -46,13 +46,13 @@
 			plot shows (lightness from 0 to 1, saturation from 0 to 1) at current hue
 		</span>
 		<br>
-		<input type="range" min="0" max="1" value="0.75" step="0.004" oninput="wompwomp()" id="range0">
-		<input type="range" min="0" max="1" value="1" step="0.004" oninput="wompwomp()" id="range1">
-		<input type="range" min="0" max="360" value="0" oninput="wompwomp()" id="range2">
+		<input type="range" min="0" max="1" value="0.75" step="0.005" oninput="wompwomp()" id="range0">
+		<input type="range" min="0" max="1" value="1" step="0.005" oninput="wompwomp()" id="range1">
+		<input type="range" min="0" max="400" value="0" oninput="wompwomp()" id="range2">
 		<br>
-		<input type="number" min="0" max="1" value="0.75" step="0.004" oninput="wampwamp()" id="input0">
-		<input type="number" min="0" max="1" value="1" step="0.004" oninput="wampwamp()" id="input1">
-		<input type="number" min="0" max="360" value="0" oninput="wampwamp()" id="input2">
+		<input type="number" min="0" max="1" value="0.75" step="0.005" oninput="wampwamp()" id="input0">
+		<input type="number" min="0" max="1" value="1" step="0.005" oninput="wampwamp()" id="input1">
+		<input type="number" min="0" max="400" value="0" oninput="wampwamp()" id="input2">
 		<script>
 			rgbtolab = ([r, g, b]) =>
 				(([r, g, b]) =>
@@ -183,56 +183,72 @@
 					uniform highp float uV;
 					
 					void main() {
-						highp vec3 vsh = ${fragmentCode};
-						highp vec3 ich = vec3(
-							vsh.x,
-							vsh.y * min(vsh.x / 6., (1. - sqrt(vsh.x * 2. - 1.)) / (1. - sqrt(.5)) * .125),
-							vsh.z
-						);
-						/*ich = vec3(
-							floor(ich.x * 20. + .5) / 20.,
-							floor(ich.y * 20. + .5) / 20.,
-							ich.z
-						);
-						ich = vec3(
-							ich.x,
-							ich.y,
-							floor(ich.z * 20. * ich.y + .5) / 20. / max(0.01, ich.y)
-						);*/
-						highp vec3 lab = vec3(
-							sqrt(ich.x * ich.x - ich.y * ich.y),
-							cos(ich.z) * ich.y,
-							sin(ich.z) * ich.y
-						);
-						/*highp vec3 lab = vec3(
-							ich.x,
-							cos(ich.z) * ich.y,
-							sin(ich.z) * ich.y
-						);*/
-						highp vec3 lms = vec3(
-							lab.x + 0.3963377774 * lab.y + 0.2158037573 * lab.z,
-							lab.x - 0.1055613458 * lab.y - 0.0638541728 * lab.z,
-							lab.x - 0.0894841775 * lab.y - 1.2914855480 * lab.z
-						);
-						/*highp vec3 lms = vec3(
-							lab.x + lab.y + .5 * lab.z,
-							lab.x - lab.y + .5 * lab.z,
-							lab.x - 2. * lab.z
-						);*/
-						lms = vec3(
-							lms.x * lms.x * lms.x,
-							lms.y * lms.y * lms.y,
-							lms.z * lms.z * lms.z
-						);
-						highp vec3 rgb = vec3(
-							+4.0767416621*lms.x - 3.3077115913*lms.y + 0.2309699292*lms.z,
-							-1.2684380046*lms.x + 2.6097574011*lms.y - 0.3413193965*lms.z,
-							-0.0041960863*lms.x - 0.7034186147*lms.y + 1.7076147010*lms.z
-						);
-						highp float wawa =
-							float(rgb.r >= 0.) * float(rgb.r <= 1.) *
-							float(rgb.g >= 0.) * float(rgb.g <= 1.) *
-							float(rgb.b >= 0.) * float(rgb.b <= 1.);
+						/*highp vec3 rgb = vec3(0., 0., 0.);
+						for (int i = 0; i < 256; i++) {*/
+							highp vec3 vsh = ${fragmentCode};
+							/*vsh = vec3(
+								vsh.x,
+								vsh.y * (256. - float(i)) / 256.,
+								vsh.z
+							);*/
+							highp vec3 ich = vec3(
+								vsh.x,
+								vsh.y * min(vsh.x / 6., (1. - sqrt(vsh.x * 2. - 1.)) / (1. - sqrt(.5)) * .125),
+								vsh.z
+							);
+							/*ich = vec3(
+								floor(ich.x * 20. + .5) / 20.,
+								floor(ich.y * 20. + .5) / 20.,
+								ich.z
+							);
+							ich = vec3(
+								ich.x,
+								ich.y,
+								floor(ich.z * 20. * ich.y + .5) / 20. / max(0.01, ich.y)
+							);*/
+							highp vec3 lab = vec3(
+								sqrt(ich.x * ich.x - ich.y * ich.y),
+								cos(ich.z) * ich.y,
+								sin(ich.z) * ich.y
+							);
+							/*highp vec3 lab = vec3(
+								ich.x,
+								cos(ich.z) * ich.y,
+								sin(ich.z) * ich.y
+							);*/
+							highp vec3 lms = vec3(
+								lab.x + 0.3963377774 * lab.y + 0.2158037573 * lab.z,
+								lab.x - 0.1055613458 * lab.y - 0.0638541728 * lab.z,
+								lab.x - 0.0894841775 * lab.y - 1.2914855480 * lab.z
+							);
+							/*highp vec3 lms = vec3(
+								lab.x + lab.y + .5 * lab.z,
+								lab.x - lab.y + .5 * lab.z,
+								lab.x - 2. * lab.z
+							);*/
+							lms = vec3(
+								lms.x * lms.x * lms.x,
+								lms.y * lms.y * lms.y,
+								lms.z * lms.z * lms.z
+							);
+							highp vec3 rgb = vec3(
+								+4.0767416621*lms.x - 3.3077115913*lms.y + 0.2309699292*lms.z,
+								-1.2684380046*lms.x + 2.6097574011*lms.y - 0.3413193965*lms.z,
+								-0.0041960863*lms.x - 0.7034186147*lms.y + 1.7076147010*lms.z
+							);
+							/*highp float mini = min(min(0., rgb.r), min(rgb.g, rgb.b));
+							highp float maxi = max(max(1., rgb.r), max(rgb.g, rgb.b));
+							rgb = vec3(
+								(rgb.r - mini) / (maxi - mini),
+								(rgb.g - mini) / (maxi - mini),
+								(rgb.b - mini) / (maxi - mini)
+							);*/
+							highp float wawa =
+								float(rgb.r >= 0.) * float(rgb.r <= 1.) *
+								float(rgb.g >= 0.) * float(rgb.g <= 1.) *
+								float(rgb.b >= 0.) * float(rgb.b <= 1.);
+							/*if (wawa == 1.) {break;}
+						}*/
 						highp vec4 wowo = vec4(rgb, 1.) * wawa +
 							vec4(0., 0., 0., 1.) * (1. - wawa);
 						highp vec4 col = vec4(
@@ -273,7 +289,7 @@
 					0
 				);
 				wawas[i] = () => (
-					webgl.uniform1f(uV, document.querySelector(`#input${i}`).value / (i == 2 ? 360 : 1)),
+					webgl.uniform1f(uV, document.querySelector(`#input${i}`).value / (i == 2 ? 400 : 1)),
 					webgl.drawArrays(webgl.TRIANGLE_STRIP, 0, 4)
 				);
 			};
@@ -301,7 +317,7 @@
 				document.querySelector("#hex").value = rgbtohex(labtorgb(ichtolab(vshtoich([
 					document.querySelector("#input0").value,
 					document.querySelector("#input1").value,
-					document.querySelector("#input2").value / 360 * Math.PI * 2
+					document.querySelector("#input2").value / 400 * Math.PI * 2
 				])))),
 				document.querySelector("#color").style["background-color"] =
 					document.querySelector("#hex").value
@@ -315,14 +331,14 @@
 				document.querySelector("#hex").value = rgbtohex(labtorgb(ichtolab(vshtoich([
 					document.querySelector("#input0").value,
 					document.querySelector("#input1").value,
-					document.querySelector("#input2").value / 360 * Math.PI * 2
+					document.querySelector("#input2").value / 400 * Math.PI * 2
 				])))),
 				document.querySelector("#color").style["background-color"] =
 					document.querySelector("#hex").value
 			);
 			wawa = () => (
 				(ich => (
-					ich = [ich[0], ich[1], (ich[2] / Math.PI / 2 + 1) % 1 * 360],
+					ich = [ich[0], ich[1], (ich[2] / Math.PI / 2 + 1) % 1 * 400],
 					wawas.forEach((x, i) => (
 						document.querySelector(`#range${i}`).value = ich[i],
 						document.querySelector(`#input${i}`).value = ich[i],
@@ -336,7 +352,7 @@
 				((x, y) => (
 					Math.sqrt(x * x + y * y) <= 1 && (
 						document.querySelector("#input1").value = Math.min(1, Math.round(Math.sqrt(x * x + y * y) * 250) / 250),
-						document.querySelector("#input2").value = Math.round((Math.atan2(-y, x) / Math.PI * 180 + 360) % 360)
+						document.querySelector("#input2").value = Math.round((Math.atan2(-y, x) / Math.PI * 180 + 400) % 400)
 					)
 				))(
 					(e.clientX - e.target.getBoundingClientRect().left) / 256 - 1,
@@ -347,7 +363,7 @@
 			document.querySelector("#canvas1").onclick = e => (
 				((x, y) => (
 					document.querySelector("#input0").value = Math.round((1 - y / 512) * 250) / 250,
-					document.querySelector("#input2").value = Math.round(x / 512 * 360)
+					document.querySelector("#input2").value = Math.round(x / 512 * 400)
 				))(
 					e.clientX - e.target.getBoundingClientRect().left,
 					e.clientY - e.target.getBoundingClientRect().top
