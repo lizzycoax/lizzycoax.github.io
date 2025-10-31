@@ -351,7 +351,7 @@
 			document.querySelector("#canvas0").onclick = e => (
 				((x, y) => (
 					Math.sqrt(x * x + y * y) <= 1 && (
-						document.querySelector("#input1").value = Math.min(1, Math.round(Math.sqrt(x * x + y * y) * 250) / 250),
+						document.querySelector("#input1").value = Math.min(1, Math.round(Math.sqrt(x * x + y * y) * 200) / 200),
 						document.querySelector("#input2").value = Math.round((Math.atan2(-y, x) / Math.PI * 180 + 400) % 400)
 					)
 				))(
@@ -362,7 +362,7 @@
 			);
 			document.querySelector("#canvas1").onclick = e => (
 				((x, y) => (
-					document.querySelector("#input0").value = Math.round((1 - y / 512) * 250) / 250,
+					document.querySelector("#input0").value = Math.round((1 - y / 512) * 200) / 200,
 					document.querySelector("#input2").value = Math.round(x / 512 * 400)
 				))(
 					e.clientX - e.target.getBoundingClientRect().left,
@@ -372,8 +372,8 @@
 			);
 			document.querySelector("#canvas2").onclick = e => (
 				((x, y) => (
-					document.querySelector("#input0").value = Math.round(x / 512 * 250) / 250,
-					document.querySelector("#input1").value = Math.round((1 - y / 512) * 250) / 250
+					document.querySelector("#input0").value = Math.round(x / 512 * 200) / 200,
+					document.querySelector("#input1").value = Math.round((1 - y / 512) * 200) / 200
 				))(
 					e.clientX - e.target.getBoundingClientRect().left,
 					e.clientY - e.target.getBoundingClientRect().top
