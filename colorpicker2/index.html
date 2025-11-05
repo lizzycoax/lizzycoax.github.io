@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+		<meta name="color-scheme" content="dark light">
+    <title></title>
+		<style>
+			span {
+				display: inline-block;
+				width: 512px;
+				text-align: center;
+			}
+			input {
+				width: 512px;
+			}
+			canvas {
+				background-color: gray;
+			}
+			div {
+				width: 512px;
+				height: 256px;
+			}
+		</style>
+  </head>
+  <body>
+		<span>rgb hex code</span><br>
+		<input id="hex" oninput="wawa()">
+		<div id="color"></div>
+		<br>
+    <canvas id="canvas0" width="512" height="512"></canvas>
+    <canvas id="canvas1" width="512" height="256"></canvas>
+    <canvas id="canvas2" width="512" height="256"></canvas><br>
+		<span>
+			intensity<br>
+			how far away the color is from black<br>
+			plot shows (hue from 0 to 400, chroma from 0 to 0.333) at current intensity
+		</span>
+		<span>
+			chroma<br>
+			how far away the color is from grayscale<br>
+			plot shows (hue from 0 to 400, intensity from 0 to 1) at current chroma
+		</span>
+		<span>
+			hue<br>
+			angle of (a, b) in LAB opponent color model<br>
+			plot shows (intensity from 0 to 1, chroma from 0 to 0.5) at current hue
+		</span>
+		<br>
+		<input type="range" min="0" max="1" value="0.7" step="0.005" oninput="wompwomp()" id="range0">
+		<input type="range" min="0" max="1" value="0.1" step="0.005" oninput="wompwomp()" id="range1">
+		<input type="range" min="0" max="400" value="0" oninput="wompwomp()" id="range2">
+		<br>
+		<input type="number" min="0" max="1" value="0.7" step="0.005" oninput="wampwamp()" id="input0">
+		<input type="number" min="0" max="1" value="0.1" step="0.005" oninput="wampwamp()" id="input1">
+		<input type="number" min="0" max="400" value="0" oninput="wampwamp()" id="input2">
+		<script>
+			rgbtolab = ([r, g, b]) =>
+				(([r, g, b]) =>
+					(([l, m, s]) => [
+						0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s,
+						1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s,
+						0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s
+					])([
+						Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b),
+						Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b),
+						Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b)
+					])
+				)([r ** 2.2, g ** 2.2, b ** 2.2]);
+			labtorgb = ([l, a, b]) =>
+				(([l, m, s]) =>
+					(([r, g, b]) => [
+						r < 0 ? r : r ** (1 / 2.2),
+						g < 0 ? g : g ** (1 / 2.2),
+						b < 0 ? b : b ** (1 / 2.2)
+					])([
+						+4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+						-1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+						-0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s
+					])
+				)([
+					(l + 0.3963377774 * a + 0.2158037573 * b) ** 3,
+					(l - 0.1055613458 * a - 0.0638541728 * b) ** 3,
+					(l - 0.0894841775 * a - 1.2914855480 * b) ** 3
+				]);
+			lmstolab = ([l, m, s]) =>
+				(([l, m, s]) => [
+					0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s,
+					1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s,
+					0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s
+				])([Math.cbrt(l), Math.cbrt(m), Math.cbrt(s)]);
+			labtolms = ([l, a, b]) => [
+				(l + 0.3963377774 * a + 0.2158037573 * b) ** 3,
+				(l - 0.1055613458 * a - 0.0638541728 * b) ** 3,
+				(l - 0.0894841775 * a - 1.2914855480 * b) ** 3
+			];
+			rgbtolms = ([r, g, b]) =>
+				(([r, g, b]) => [
+					0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b,
+					0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b,
+					0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b
+				])([r ** 2.2, g ** 2.2, b ** 2.2]);
+			lmstorgb = ([l, m, s]) =>
+				(([r, g, b]) => [
+					r < 0 ? r : r ** (1 / 2.2),
+					g < 0 ? g : g ** (1 / 2.2),
+					b < 0 ? b : b ** (1 / 2.2)
+				])([
+					+4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+					-1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+					-0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s
+				]);
+			labtoich = ([l, a, b]) => (c => (i => [
+				i,
+				c,
+				Math.atan2(b, a)
+			])(Math.sqrt(l * l + c * c)))(Math.sqrt(a * a + b * b));
+			ichtolab = ([i, c, h]) => [
+				Math.sqrt(i * i - c * c),
+				Math.cos(h) * c,
+				Math.sin(h) * c
+			];
+			rgbtohex = ([r, g, b]) =>
+				(([r, g, b]) => (
+					isNaN(r) || r < 0 || r > 255 ||
+					isNaN(g) || g < 0 || g > 255 ||
+					isNaN(b) || b < 0 || b > 255 ? "" :
+					"#" +
+					("0" + r.toString(16)).slice(-2) +
+					("0" + g.toString(16)).slice(-2) +
+					("0" + b.toString(16)).slice(-2)
+				))([
+					Math.round(r * 255),
+					Math.round(g * 255),
+					Math.round(b * 255)
+				]);
+			hextorgb = a =>
+				a.slice(1).match(/..?/g).map(x =>
+					parseInt(x, 16) / 255
+				);
+			wawas = [];
+			setup = (i, fragmentCode) => {
+				let canvas = document.querySelector(`#canvas${i}`);
+				let webgl = canvas.getContext("webgl2");
+				let program = webgl.createProgram();
+				let vertexShader = webgl.createShader(webgl.VERTEX_SHADER);
+				webgl.shaderSource(vertexShader, `
+					attribute vec2 aVertexPosition;
+					
+					varying vec2 vVertexPosition;
+					
+					void main() {
+						gl_Position = vec4(aVertexPosition, 0., 1.);
+						vVertexPosition = aVertexPosition;
+					}
+				`);
+				webgl.compileShader(vertexShader);
+				webgl.attachShader(program, vertexShader);
+				let fragmentShader = webgl.createShader(webgl.FRAGMENT_SHADER);
+				/*
+				R =  3.2404542*X - 1.5371385*Y - 0.4985314*Z
+				G = -0.9692660*X + 1.8760108*Y + 0.0415560*Z
+				B =  0.0556434*X - 0.2040259*Y + 1.0572252*Z
+				
+				+4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+				-1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+				-0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s
+				*/
+				webgl.shaderSource(fragmentShader, `
+					#define M_PI 3.1415926535897932384626433832795
+					
+					varying highp vec2 vVertexPosition;
+					
+					uniform highp float uV;
+					
+					void main() {
+						highp vec3 ich = ${fragmentCode};
+						highp vec3 lab = vec3(
+							sqrt(ich.x * ich.x - ich.y * ich.y),
+							cos(ich.z) * ich.y,
+							sin(ich.z) * ich.y
+						);
+						/*highp vec3 lab = vec3(
+							ich.x,
+							cos(ich.z) * ich.y,
+							sin(ich.z) * ich.y
+						);*/
+						highp vec3 lms = vec3(
+							lab.x + 0.3963377774 * lab.y + 0.2158037573 * lab.z,
+							lab.x - 0.1055613458 * lab.y - 0.0638541728 * lab.z,
+							lab.x - 0.0894841775 * lab.y - 1.2914855480 * lab.z
+						);
+						/*highp vec3 lms = vec3(
+							lab.x + lab.y + .5 * lab.z,
+							lab.x - lab.y + .5 * lab.z,
+							lab.x - 2. * lab.z
+						);*/
+						lms = vec3(
+							lms.x * lms.x * lms.x,
+							lms.y * lms.y * lms.y,
+							lms.z * lms.z * lms.z
+						);
+						highp vec3 rgb = vec3(
+							+4.0767416621*lms.x - 3.3077115913*lms.y + 0.2309699292*lms.z,
+							-1.2684380046*lms.x + 2.6097574011*lms.y - 0.3413193965*lms.z,
+							-0.0041960863*lms.x - 0.7034186147*lms.y + 1.7076147010*lms.z
+						);
+						/*highp float mini = min(rgb.r, min(rgb.g, rgb.b));
+						highp float maxi = max(rgb.r, max(rgb.g, rgb.b));
+						mini = min(0., mini);
+						maxi = max(1., maxi);
+						rgb = (rgb - mini) / (maxi - mini);
+						rgb = vec3(
+							max(0., min(1., rgb.r)),
+							max(0., min(1., rgb.g)),
+							max(0., min(1., rgb.b))
+						);*/
+						/*rgb = vec3(
+							floor(rgb.r * 8. + .5) / 8.,
+							floor(rgb.g * 16. + .5) / 16.,
+							floor(rgb.b * 4. + .5) / 4.
+						);*/
+						highp float wawa =
+							float(rgb.r >= 0.) * float(rgb.r <= 1.) *
+							float(rgb.g >= 0.) * float(rgb.g <= 1.) *
+							float(rgb.b >= 0.) * float(rgb.b <= 1.);
+						highp vec4 wowo = vec4(rgb, 1.) * wawa +
+							vec4(0., 0., 0., 1.) * (1. - wawa);
+						highp vec4 col = vec4(
+							pow(wowo.r, 1. / 2.2),
+							pow(wowo.g, 1. / 2.2),
+							pow(wowo.b, 1. / 2.2),
+							wowo.a
+						);
+						/*col = vec4(
+							floor(col.r * 8. + .5) / 8.,
+							floor(col.g * 16. + .5) / 16.,
+							floor(col.b * 4. + .5) / 4.,
+							col.a
+						);*/
+						gl_FragColor = col;
+					}
+				`);
+				webgl.compileShader(fragmentShader);
+				webgl.attachShader(program, fragmentShader);
+				webgl.linkProgram(program);
+				let aVertexPosition = webgl.getAttribLocation(program, "aVertexPosition");
+				let uV = webgl.getUniformLocation(program, "uV");
+				webgl.useProgram(program);
+				webgl.bindBuffer(webgl.ARRAY_BUFFER, webgl.createBuffer());
+				webgl.bufferData(webgl.ARRAY_BUFFER, new Float32Array([
+					-1, -1,
+					-1, 1,
+					1, -1,
+					1, 1
+				]), webgl.STATIC_DRAW);
+				webgl.enableVertexAttribArray(aVertexPosition);
+				webgl.vertexAttribPointer(
+					aVertexPosition,
+					2,
+					webgl.FLOAT,
+					false,
+					0,
+					0
+				);
+				wawas[i] = () => (
+					webgl.uniform1f(uV, document.querySelector(`#input${i}`).value / (i == 2 ? 400 : 1)),
+					webgl.drawArrays(webgl.TRIANGLE_STRIP, 0, 4)
+				);
+			};
+			setup(0, `vec3(
+				uV * float(length(vVertexPosition) <= 1.),
+				length(vVertexPosition) / 3.,
+				mod(atan(vVertexPosition.y, vVertexPosition.x) + M_PI * 2., M_PI * 2.)
+			)`);
+			setup(1, `vec3(
+				vVertexPosition.y / 2. + .5,
+				uV,
+				(vVertexPosition.x + 1.) * M_PI
+			)`);
+			setup(2, `vec3(
+				vVertexPosition.x / 2. + .5,
+				vVertexPosition.y / 4. + .25,
+				uV * M_PI * 2.
+			)`);
+			wompwomp = () => (
+				wawas.forEach((x, i) => (
+					document.querySelector(`#input${i}`).value =
+						document.querySelector(`#range${i}`).value,
+					x()
+				)),
+				document.querySelector("#hex").value = rgbtohex(labtorgb(ichtolab([
+					document.querySelector("#input0").value,
+					document.querySelector("#input1").value,
+					document.querySelector("#input2").value / 400 * Math.PI * 2
+				]))),
+				document.querySelector("#color").style["background-color"] =
+					document.querySelector("#hex").value
+			);
+			wampwamp = () => (
+				wawas.forEach((x, i) => (
+					document.querySelector(`#range${i}`).value =
+						document.querySelector(`#input${i}`).value,
+					x()
+				)),
+				document.querySelector("#hex").value = rgbtohex(labtorgb(ichtolab([
+					document.querySelector("#input0").value,
+					document.querySelector("#input1").value,
+					document.querySelector("#input2").value / 400 * Math.PI * 2
+				]))),
+				document.querySelector("#color").style["background-color"] =
+					document.querySelector("#hex").value
+			);
+			wawa = () => (
+				(ich => (
+					ich = [ich[0], ich[1], (ich[2] / Math.PI / 2 + 1) % 1 * 400],
+					wawas.forEach((x, i) => (
+						document.querySelector(`#range${i}`).value = ich[i],
+						document.querySelector(`#input${i}`).value = ich[i],
+						x()
+					))
+				))(labtoich(rgbtolab(hextorgb(document.querySelector("#hex").value)))),
+				document.querySelector("#color").style["background-color"] =
+					document.querySelector("#hex").value
+			);
+			document.querySelector("#canvas0").onclick = e => (
+				((x, y) => (
+					Math.sqrt(x * x + y * y) <= 1 && (
+						document.querySelector("#input1").value = Math.min(1, Math.round(Math.sqrt(x * x + y * y) / 3 * 200) / 200),
+						document.querySelector("#input2").value = Math.round((Math.atan2(-y, x) / Math.PI * 200 + 400) % 400)
+					)
+				))(
+					(e.clientX - e.target.getBoundingClientRect().left) / 256 - 1,
+					(e.clientY - e.target.getBoundingClientRect().top) / 256 - 1
+				),
+				wampwamp()
+			);
+			document.querySelector("#canvas1").onclick = e => (
+				((x, y) => (
+					document.querySelector("#input0").value = Math.round((1 - y / 256) * 200) / 200,
+					document.querySelector("#input2").value = Math.round(x / 512 * 400)
+				))(
+					e.clientX - e.target.getBoundingClientRect().left,
+					e.clientY - e.target.getBoundingClientRect().top
+				),
+				wampwamp()
+			);
+			document.querySelector("#canvas2").onclick = e => (
+				((x, y) => (
+					document.querySelector("#input0").value = Math.round(x / 512 * 200) / 200,
+					document.querySelector("#input1").value = Math.round((.5 - y / 512) * 200) / 200
+				))(
+					e.clientX - e.target.getBoundingClientRect().left,
+					e.clientY - e.target.getBoundingClientRect().top
+				),
+				wampwamp()
+			);
+			wompwomp();
+		</script>
+  </body>
+</html>
