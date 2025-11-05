@@ -352,7 +352,7 @@
 				((x, y) => (
 					Math.sqrt(x * x + y * y) <= 1 && (
 						document.querySelector("#input1").value = Math.min(1, Math.round(Math.sqrt(x * x + y * y) * 200) / 200),
-						document.querySelector("#input2").value = Math.round((Math.atan2(-y, x) / Math.PI * 180 + 400) % 400)
+						document.querySelector("#input2").value = Math.round((Math.atan2(-y, x) / Math.PI * 200 + 400) % 400)
 					)
 				))(
 					(e.clientX - e.target.getBoundingClientRect().left) / 256 - 1,
