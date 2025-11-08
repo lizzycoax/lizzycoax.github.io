@@ -31,7 +31,7 @@
     <canvas id="canvas1" width="512" height="512"></canvas>
     <canvas id="canvas2" width="512" height="512"></canvas><br>
 		<span>
-			lightness<br>
+			intensity<br>
 			how far away the color is from black<br>
 			plot shows circle (saturation from 0 to 1, hue in gradians) at current lightness
 		</span>
@@ -46,18 +46,18 @@
 			plot shows (lightness from 0 to 1, saturation from 0 to 1) at current hue
 		</span>
 		<br>
-		<input type="range" min="0" max="1" value="0.75" step="0.005" oninput="wompwomp()" id="range0">
+		<input type="range" min="0" max="1" value="0.7" step="0.005" oninput="wompwomp()" id="range0">
 		<input type="range" min="0" max="1" value="1" step="0.005" oninput="wompwomp()" id="range1">
 		<input type="range" min="0" max="400" value="0" oninput="wompwomp()" id="range2">
 		<br>
-		<input type="number" min="0" max="1" value="0.75" step="0.005" oninput="wampwamp()" id="input0">
+		<input type="number" min="0" max="1" value="0.7" step="0.005" oninput="wampwamp()" id="input0">
 		<input type="number" min="0" max="1" value="1" step="0.005" oninput="wampwamp()" id="input1">
 		<input type="number" min="0" max="400" value="0" oninput="wampwamp()" id="input2">
 		<script>
 			rgbtolab = ([r, g, b]) =>
 				(([r, g, b]) =>
 					(([l, m, s]) => [
-						0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s,
+						(0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s) ** (3 / 2.2),
 						1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s,
 						0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s
 					])([
@@ -77,22 +77,22 @@
 						-1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
 						-0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s
 					])
-				)([
+				)((l => [
 					(l + 0.3963377774 * a + 0.2158037573 * b) ** 3,
 					(l - 0.1055613458 * a - 0.0638541728 * b) ** 3,
 					(l - 0.0894841775 * a - 1.2914855480 * b) ** 3
-				]);
+				])(l ** (2.2 / 3)));
 			lmstolab = ([l, m, s]) =>
 				(([l, m, s]) => [
-					0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s,
+					(0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s) ** (3 / 2.2),
 					1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s,
 					0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s
 				])([Math.cbrt(l), Math.cbrt(m), Math.cbrt(s)]);
-			labtolms = ([l, a, b]) => [
+			labtolms = ([l, a, b]) => (l => [
 				(l + 0.3963377774 * a + 0.2158037573 * b) ** 3,
 				(l - 0.1055613458 * a - 0.0638541728 * b) ** 3,
 				(l - 0.0894841775 * a - 1.2914855480 * b) ** 3
-			];
+			])(l ** (2.2 / 3));
 			rgbtolms = ([r, g, b]) =>
 				(([r, g, b]) => [
 					0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b,
@@ -121,12 +121,12 @@
 			];
 			vshtoich = ([v, s, h]) => [
 				v,
-				s * (v <= .75 ? v / 6 : (1 - Math.sqrt(v * 2 - 1)) / (1 - Math.sqrt(.5)) * .125),
+				s * (v <= .675 ? v / 5.4 : (1 - Math.sqrt(v / .65 - .35 / .65)) / (1 - Math.sqrt(.5)) * .125),
 				h
 			];
 			ichtovsh = ([v, s, h]) => [
 				v,
-				s / (v <= .75 ? v / 6 : (1 - Math.sqrt(v * 2 - 1)) / (1 - Math.sqrt(.5)) * .125),
+				s / (v <= .675 ? v / 5.4 : (1 - Math.sqrt(v / .65 - .35 / .65)) / (1 - Math.sqrt(.5)) * .125),
 				h
 			];
 			rgbtohex = ([r, g, b]) =>
@@ -193,7 +193,7 @@
 							);*/
 							highp vec3 ich = vec3(
 								vsh.x,
-								vsh.y * min(vsh.x / 6., (1. - sqrt(vsh.x * 2. - 1.)) / (1. - sqrt(.5)) * .125),
+								vsh.y * min(vsh.x / 5.4, (1. - sqrt(vsh.x / .65 - .35 / .65)) / (1. - sqrt(.5)) * .125),
 								vsh.z
 							);
 							/*ich = vec3(
@@ -207,7 +207,7 @@
 								floor(ich.z * 20. * ich.y + .5) / 20. / max(0.01, ich.y)
 							);*/
 							highp vec3 lab = vec3(
-								sqrt(ich.x * ich.x - ich.y * ich.y),
+								pow(sqrt(ich.x * ich.x - ich.y * ich.y), 2.2 / 3.),
 								cos(ich.z) * ich.y,
 								sin(ich.z) * ich.y
 							);
