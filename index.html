@@ -27,11 +27,17 @@
 				opacity: calc(exp(0 - var(--time) + var(--offset)));
 				animation: wawa 10s linear 0s infinite;
 			}
-			#matrix > a {
+			#matrix > span > a:link {
 				color: #0f0;
 			}
-			#matrix > a :hover {
+			#matrix > span > a:visited {
+				color: #0b0;
+			}
+			#matrix > span > a:hover {
 				text-shadow: 0px 0px 1em #0f0;
+			}
+			#matrix > span > a:active {
+				text-shadow: 0px 0px 1em #0f0, 0px 0px 1em #0f0;
 			}
 			#matrix > span > * {
 				color: #0b0;
