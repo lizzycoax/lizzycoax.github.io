@@ -1,15 +1,103 @@
-<meta name="color-scheme" content="dark light">
-<a href="automationlayers/index.html">automation layers</a><br>
-<a href="toinfinity/index.html">to infinity</a><br>
-<a href="hydraofc/index.html">hydra ordinal collapsing function</a><br>
-<a href="alphagrowth/index.html">alpha growth</a><br>
-<a href="https://www.roblox.com/groups/15833113">roblox group</a><br>
-<a href="bignum/index.html">bignum (game)</a><br>
-<a href="https://github.com/dadutchboy2/bignum">bignum (number library), storage limit of f_3(1.797e308), function limit of f_3(9.007e15)</a><br>
-<a href="https://github.com/dadutchboy2/iternum">iternum (number library), storage limit of f_ω^ω(array length), function limit of f_ω+1(9.007e15)</a><br>
-<a href="https://github.com/dadutchboy2/bignum2">bignum2 (number library), storage limit of f_ε_0(array length), function limit of f_ε_0(array length)</a><br>
-<a href="answertolife/index.html">the answer to life</a><br>
-<a href="schruteflip/index.html">schrute flip</a><br>
-<a href="colorpicker/index.html">color picker</a><br>
-<a href="colorpicker2/index.html">color picker 2</a><br>
-<a href="https://alldimensions.fandom.com/wiki/Dadutch%27s_hierarchy">multiverse hierarchy</a><br>
+<!DOCTYPE html>
+<html lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta name="color-scheme" content="dark light">
+		<title></title>
+		<style>
+			#matrix {
+				font-family: monospace;
+				font-size: min(calc(1vw * 100 / 64 / 1.2), calc(1vh * 100 / 36 / 1.205));
+			}
+			@property --time {
+				syntax: "<number>";
+				initial-value: 10;
+				inherits: true;
+			}
+			@property --offset {
+				syntax: "<number>";
+				initial-value: 0;
+				inherits: true;
+			}
+			@keyframes wawa {
+				from {--time: 0}
+				to {--time: 10}
+			}
+			#matrix > * > span {
+				opacity: calc(exp(0 - var(--time) + var(--offset)));
+				animation: wawa 10s linear 0s infinite;
+			}
+			#matrix > a {
+				color: #0f0;
+			}
+			#matrix > a :hover {
+				text-shadow: 0px 0px 1em #0f0;
+			}
+			#matrix > span > * {
+				color: #0b0;
+			}
+		</style>
+	</head>
+	<body style="margin: 0">
+		<div id="matrix">
+			<span id="row1">Wake up, Neo. The Matrix has you. Follow the white rabbit.</span>
+			<a id="link2" href="automationlayers/index.html">automation layers</a>
+			<a id="link3" href="toinfinity/index.html">to infinity</a>
+			<a id="link4" href="hydraofc/index.html">hydra ordinal collapsing function</a>
+			<a id="link5" href="alphagrowth/index.html">alpha growth</a>
+			<a id="link6" href="https://www.roblox.com/groups/15833113">roblox group</a>
+			<a id="link7" href="bignum/index.html">bignum (game)</a>
+			<a id="link8" href="https://github.com/dadutchboy2/bignum">bignum (number library), storage limit of f_3(1.797e308), function limit of f_3(9.007e15)</a>
+			<a id="link9" href="https://github.com/dadutchboy2/iternum">iternum (number library), storage limit of f_ω^ω(array length), function limit of f_ω+1(9.007e15)</a>
+			<a id="link10" href="https://github.com/dadutchboy2/bignum2">bignum2 (number library), storage limit of f_ε_0(array length), function limit of f_ε_0(array length)</a>
+			<a id="link11" href="answertolife/index.html">the answer to life</a>
+			<a id="link12" href="schruteflip/index.html">schrute flip</a>
+			<a id="link13" href="colorpicker/index.html">color picker</a>
+			<a id="link14" href="colorpicker2/index.html">color picker 2</a>
+			<a id="link15" href="https://alldimensions.fandom.com/wiki/Dadutch%27s_hierarchy">multiverse hierarchy</a>
+		</div>
+		<script>
+			let greek = "ΑαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσςΤτΥυΦφΧχΨψΩω";
+			let symbols = "αβΓγδεζηθΙιΚΜμξτΦφΧχΨψΩω+×^_()1234567890";
+			let offsets = Array(200).fill(0).map(x => Math.random());
+			let speeds = Array(200).fill(0).map(x => Math.random());
+			for (let i = 36; i > 0; i--) {
+				let row = matrix.querySelector(`#row${i}`);
+				let link = matrix.querySelector(`#link${i}`);
+				if (!row) {
+					row = document.createElement("span");
+					row.id = `row${i}`;
+					if (i == 36) {
+						matrix.appendChild(row);
+					} else {
+						matrix.insertBefore(row, matrix.querySelector(`#row${i + 1}`).previousSibling);
+					}
+				}
+				if (i > 1) {
+					let br = document.createElement("br");
+					matrix.insertBefore(br, row);
+				}
+				let text = row.innerHTML;
+				row.innerHTML = "";
+				if (link) {row.appendChild(link);}
+				let fancytext = "";
+				for (let j = 1; j < 128; j++) {
+					if (link && j <= link.innerHTML.length) {continue;}
+					if (!text[j - 1] && j % 2 == 0) {
+						fancytext += " ";
+						continue;
+					}
+					let idtext = `id="row${i}col${j}"`;
+					let styletext = text[j - 1] && i > 1 ?
+						`style="animation:none;--time:0"` :
+						`style="animation-delay:${offsets[j - 1] * 10 + i / 5 * (speeds[j - 1] * .8 + .2)}s"`;
+					let symboltext = text[j - 1] ?
+						text[j - 1] :
+						symbols[Math.floor(Math.random() * symbols.length)];
+					fancytext += `<span ${idtext} ${styletext}>${symboltext}</span>`;
+				}
+				row.innerHTML += fancytext;
+			}
+		</script>
+	</body>
+</html>
