@@ -24,9 +24,10 @@
 				from {--time: 0}
 				to {--time: 10}
 			}
-			#matrix > * > span {
+			#matrix > span > span {
 				opacity: calc(exp(0 - var(--time) + var(--offset)));
 				animation: wawa 10s linear 0s infinite;
+				color: #0b0;
 			}
 			#matrix > span > a:link {
 				color: #0f0;
@@ -40,8 +41,10 @@
 			#matrix > span > a:active {
 				text-shadow: 0px 0px 1em #0f0, 0px 0px 1em #0f0;
 			}
-			#matrix > span > * {
-				color: #0b0;
+			@media only screen and (max-width: 768px) {
+				#matrix > span > span {
+					animation: none;
+				}
 			}
 		</style>
 	</head>
