@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html lang="">
 	<head>
-		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 		<meta charset="utf-8">
 		<meta name="color-scheme" content="dark light">
-		<title>Lizzy's website</title>
+		<title></title>
 		<style>
+			#container {
+				height: 100vh;
+				width: 100vw;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
 			#matrix {
 				font-family: monospace;
-				font-size: min(calc(1vw * 100 / 64 / 1.2), calc(1vh * 100 / 36 / 1.205));
+				height: calc(min(calc(100vh / 9), calc(100vw / 16)) * 9);
+				width: calc(min(calc(100vh / 9), calc(100vw / 16)) * 16);
+				font-size: calc(min(calc(100vh / 9), calc(100vw / 16)) * 9 / 36 / 1.2);
+				background: radial-gradient(#0200, #0208), radial-gradient(#030, #020);
+				background-size: 100% 100%, 100% calc(100% / 36);
+				display: inline;
 			}
 			@property --time {
 				syntax: "<number>";
@@ -21,8 +32,12 @@
 				inherits: true;
 			}
 			@keyframes wawa {
-				from {--time: 0}
-				to {--time: 10}
+				0% {--time: 0}
+				100% {--time: 10}
+			}
+			#matrix > span {
+				height: 1.2em;
+				display: block;
 			}
 			#matrix > span > span {
 				opacity: calc(exp(0 - var(--time) + var(--offset)));
@@ -49,28 +64,30 @@
 		</style>
 	</head>
 	<body style="margin: 0">
-		<div id="matrix">
-			<span id="row1">Wake up, Neo. The Matrix has you. Follow the white rabbit.</span>
-			<a id="link2" href="automationlayers/index.html">automation layers</a>
-			<a id="link3" href="toinfinity/index.html">to infinity</a>
-			<a id="link4" href="hydraofc/index.html">hydra ordinal collapsing function</a>
-			<a id="link5" href="alphagrowth/index.html">alpha growth</a>
-			<a id="link6" href="https://www.roblox.com/groups/15833113">roblox group</a>
-			<a id="link7" href="bignum/index.html">bignum (game)</a>
-			<a id="link8" href="https://github.com/dadutchboy2/bignum">bignum (number library), storage limit of f_3(1.797e308), function limit of f_3(9.007e15)</a>
-			<a id="link9" href="https://github.com/dadutchboy2/iternum">iternum (number library), storage limit of f_ω^ω(array length), function limit of f_ω+1(9.007e15)</a>
-			<a id="link10" href="https://github.com/dadutchboy2/bignum2">bignum2 (number library), storage limit of f_ε_0(array length), function limit of f_ε_0(array length)</a>
-			<a id="link11" href="answertolife/index.html">the answer to life</a>
-			<a id="link12" href="schruteflip/index.html">schrute flip</a>
-			<a id="link13" href="colorpicker/index.html">color picker</a>
-			<a id="link14" href="colorpicker2/index.html">color picker 2</a>
-			<a id="link15" href="https://alldimensions.fandom.com/wiki/Dadutch%27s_hierarchy">multiverse hierarchy</a>
+		<div id="container">
+			<div id="matrix">
+				<span id="row1">Wake up, Neo. The Matrix has you. Follow the white rabbit.</span>
+				<a id="link2" href="automationlayers/index.html">automation layers</a>
+				<a id="link3" href="toinfinity/index.html">to infinity</a>
+				<a id="link4" href="hydraofc/index.html">hydra ordinal collapsing function</a>
+				<a id="link5" href="alphagrowth/index.html">alpha growth</a>
+				<a id="link6" href="https://www.roblox.com/groups/15833113">roblox group</a>
+				<a id="link7" href="bignum/index.html">bignum (game)</a>
+				<a id="link8" href="https://github.com/dadutchboy2/bignum">bignum (number library), storage limit of f_3(1.797e308), function limit of f_3(9.007e15)</a>
+				<a id="link9" href="https://github.com/dadutchboy2/iternum">iternum (number library), storage limit of f_ω^ω(array length), function limit of f_ω+1(9.007e15)</a>
+				<a id="link10" href="https://github.com/dadutchboy2/bignum2">bignum2 (number library), storage limit of f_ε_0(array length), function limit of f_ε_0(array length)</a>
+				<a id="link11" href="answertolife/index.html">the answer to life</a>
+				<a id="link12" href="schruteflip/index.html">schrute flip</a>
+				<a id="link13" href="colorpicker/index.html">color picker</a>
+				<a id="link14" href="colorpicker2/index.html">color picker 2</a>
+				<a id="link15" href="https://alldimensions.fandom.com/wiki/Dadutch%27s_hierarchy">multiverse hierarchy</a>
+			</div>
 		</div>
 		<script>
 			let greek = "ΑαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσςΤτΥυΦφΧχΨψΩω";
 			let symbols = "αβΓγδεζηθΙιΚΜμξτΦφΧχΨψΩω+×^_()1234567890";
-			let offsets = Array(200).fill(0).map(x => Math.random());
-			let speeds = Array(200).fill(0).map(x => Math.random());
+			let offsets = Array(128).fill(0).map(x => Math.random());
+			let speeds = Array(128).fill(0).map(x => Math.random());
 			for (let i = 36; i > 0; i--) {
 				let row = matrix.querySelector(`#row${i}`);
 				let link = matrix.querySelector(`#link${i}`);
@@ -80,12 +97,8 @@
 					if (i == 36) {
 						matrix.appendChild(row);
 					} else {
-						matrix.insertBefore(row, matrix.querySelector(`#row${i + 1}`).previousSibling);
+						matrix.insertBefore(row, matrix.querySelector(`#row${i + 1}`));
 					}
-				}
-				if (i > 1) {
-					let br = document.createElement("br");
-					matrix.insertBefore(br, row);
 				}
 				let text = row.innerHTML;
 				row.innerHTML = "";
@@ -99,7 +112,7 @@
 					}
 					let idtext = `id="row${i}col${j}"`;
 					let styletext = text[j - 1] && i > 1 ?
-						`style="animation:none;--time:0"` :
+						`style="animation:none"` :
 						`style="animation-delay:${offsets[j - 1] * 10 + i / 5 * (speeds[j - 1] * .8 + .2)}s"`;
 					let symboltext = text[j - 1] ?
 						text[j - 1] :
