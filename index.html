@@ -11,15 +11,15 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				background: radial-gradient(#030, #020);
+				background: #000;
 			}
 			#matrix {
 				font-family: monospace;
-				height: calc(min(calc(90vh / 9), calc(90vw / 16)) * 9);
-				width: calc(min(calc(90vh / 9), calc(90vw / 16)) * 16);
-				font-size: calc(min(calc(90vh / 9), calc(90vw / 16)) * 9 / 36 / 1.2);
-				background: radial-gradient(#0200, #0208), radial-gradient(#030, #020);
-				background-size: 100% 100%, 100% calc(100% / 36);
+				height: calc(min(calc(100vh / 9), calc(100vw / 16)) * 9);
+				width: calc(min(calc(100vh / 9), calc(100vw / 16)) * 16);
+				font-size: calc(min(calc(100vh / 9), calc(100vw / 16)) * 9 / 36 / 1.2);
+/*				background: radial-gradient(#0000, #000), radial-gradient(#030, #020);
+				background-size: 100% 100%, 100% calc(100% / 36);*/
 				display: inline;
 			}
 			@property --time {
@@ -27,23 +27,24 @@
 				initial-value: 10;
 				inherits: true;
 			}
-			@property --offset {
+			@property --decay {
 				syntax: "<number>";
-				initial-value: 0;
+				initial-value: 1;
 				inherits: true;
 			}
 			@keyframes wawa {
 				0% {--time: 0}
-				100% {--time: 10}
+				100% {--time: 20}
 			}
 			#matrix > span {
 				height: 1.2em;
 				display: block;
 			}
 			#matrix > span > span {
-				opacity: calc(exp(0 - var(--time) + var(--offset)));
-				animation: wawa 10s linear 0s infinite;
-				color: #0b0;
+				opacity: calc(exp(0 - max(0, var(--time) * var(--decay) - 2)));
+				animation: wawa 20s linear 0s infinite;
+				color: hsl(from #0f0 h s calc(25 + exp((0 - var(--time) * var(--decay)) * 10) * 75));
+				font-weight: bold;
 			}
 			#matrix > span > a:link {
 				color: #0f0;
@@ -113,7 +114,7 @@
 					let idtext = `id="row${i}col${j}"`;
 					let styletext = text[j - 1] && i > 1 ?
 						`style="animation:none"` :
-						`style="animation-delay:${offsets[j - 1] * 10 + i / 5 * (speeds[j - 1] * .8 + .2)}s"`;
+						`style="animation-delay:${offsets[j - 1] * 20 + i / 20 * Math.exp(speeds[j - 1] - 0.5)}s;--decay:${Math.exp(Math.random() / 5 - 0.1)}"`;
 					let symboltext = text[j - 1] ?
 						text[j - 1] :
 						symbols[Math.floor(Math.random() * symbols.length)];
