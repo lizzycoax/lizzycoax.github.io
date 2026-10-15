@@ -11,12 +11,13 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				background: radial-gradient(#030, #020);
 			}
 			#matrix {
 				font-family: monospace;
-				height: calc(min(calc(100vh / 9), calc(100vw / 16)) * 9);
-				width: calc(min(calc(100vh / 9), calc(100vw / 16)) * 16);
-				font-size: calc(min(calc(100vh / 9), calc(100vw / 16)) * 9 / 36 / 1.2);
+				height: calc(min(calc(90vh / 9), calc(90vw / 16)) * 9);
+				width: calc(min(calc(90vh / 9), calc(90vw / 16)) * 16);
+				font-size: calc(min(calc(90vh / 9), calc(90vw / 16)) * 9 / 36 / 1.2);
 				background: radial-gradient(#0200, #0208), radial-gradient(#030, #020);
 				background-size: 100% 100%, 100% calc(100% / 36);
 				display: inline;
@@ -84,8 +85,7 @@
 			</div>
 		</div>
 		<script>
-			let greek = "ΑαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσςΤτΥυΦφΧχΨψΩω";
-			let symbols = "αβΓγδεζηθΙιΚΜμξτΦφΧχΨψΩω+×^_()1234567890";
+			let symbols = "αβΓγδεζηθΙιΚΜμξτΦφΧχΨψΩωfgH+×^_'@()[]1234567890";
 			let offsets = Array(128).fill(0).map(x => Math.random());
 			let speeds = Array(128).fill(0).map(x => Math.random());
 			for (let i = 36; i > 0; i--) {
