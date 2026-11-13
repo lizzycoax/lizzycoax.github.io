@@ -1,0 +1,134 @@
+body {
+	margin: 0;
+	font-family: sans-serif;
+	font-size: 1.5em;
+}
+p, span {
+	text-align: center;
+}
+button {
+	font-size: 1em;
+	margin: 2px;
+	border: 2px solid;
+	border-radius: 4px;
+	&:disabled {
+		background: #021;
+		border-color: #465;
+		color: #888;
+	}
+	&:enabled {
+		background: radial-gradient(#055, #032);
+		border-color: #8ba;
+		color: #fff;
+	}
+	&:enabled:hover {background: radial-gradient(#468, #055)}
+	&:enabled:active {background: radial-gradient(#357, #044)}
+	&.selected {
+		background: #488;
+		border-color: #8ba;
+		color: #fff;
+	}
+	&.unselected {
+		border-color: #687;
+		color: #bbb;
+	}
+	&.unselected:hover {
+		border-color: #8ba;
+		color: #fff;
+	}
+}
+.node {
+	&:disabled {
+		background: #840;
+		border-color: #bbb;
+		color: #fff;
+	}
+	&:enabled {
+		background: radial-gradient(#da0, #863);
+		border-color: #fff;
+		color: #fff;
+	}
+	&:enabled:hover {background: radial-gradient(#fc0, #a85)}
+	&:enabled:active {background: radial-gradient(#eb0, #974)}
+	&.locked {
+		background: #300;
+		border-color: #444;
+		color: #666;
+	}
+	&.completed {
+		background: #648;
+		border-color: #fff;
+		color: #fff;
+	}
+	&.empty {background: none}
+}
+#arrangement {
+	width: 100vw;
+	display: grid;
+	grid-auto-rows: 1fr;
+	grid-template-columns: 1fr 2fr 1fr;
+	& > div {
+		height: 100vh;
+	}
+}
+#middle {
+	grid-template-rows: 1fr 0fr 3fr 0fr;
+}
+#right {
+	grid-template-rows: 0fr 1fr;
+}
+.hit {
+	margin: 2px;
+	border: 2px solid #bbb;
+	border-radius: 4px;
+	background: linear-gradient(
+		100grad, rgb(from #333 r g b / var(--l)), #fff0 30%, #fff0 70%,
+		rgb(from #333 r g b / var(--r)));
+}
+@property --l {
+	syntax: "<number>";
+	inherits: true;
+	initial-value: 0;
+}
+@property --r {
+	syntax: "<number>";
+	inherits: true;
+	initial-value: 0;
+}
+.inner {
+	display: grid;
+	grid-auto-rows: 1fr;
+	grid-auto-columns: 1fr;
+}
+.horizontal {
+	grid-auto-flow: column;
+}
+.aside {
+	grid-template-columns: 2fr 1fr;
+}
+.present {
+	grid-template-columns: 1fr 2fr;
+}
+.zero {
+	grid-template-rows: 0fr;
+}
+.center {
+	place-items: center stretch;
+}
+.xcenter {
+	place-items: center;
+}
+.scroll {
+	overflow-y: scroll;
+}
+.node {
+	width: 7em;
+	height: 5em;
+	border-radius: 2.5em;
+}
+.small {
+	font-size: 0.75em;
+}
+.hidden {
+	opacity: 0%;
+}
