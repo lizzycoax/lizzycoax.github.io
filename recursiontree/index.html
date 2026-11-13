@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="">
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="color-scheme" content="dark">
+		<link rel="stylesheet" href="style.css"></link>
+	</head>
+	<body>
+		<div id="arrangement">
+			<div id="left" class="inner">
+				<div id="chipdiv" class="inner center hit">
+					<p>
+						You have <span id="number">0</span>B of data<br>
+						<span id="nps" class="small">0/s</span>
+					</p>
+				</div>
+				<div class="inner">
+					<button id="ngu">
+						<span id="make">Compute a byte of data</span><br>
+						<span class="small">+ 0.1 seconds of computation</span>
+					</button>
+				</div>
+			</div>
+			<div id="middle" class="inner">
+				<div class="inner center hit">
+					<p>
+						Your googolism is <span id="googol">0</span>
+					</p>
+				</div>
+				<p>Recursion tree v1</p>
+				<div class="inner scroll zero">
+					<div id="tree" class="inner"></div>
+				</div>
+				<div class="inner xcenter">
+					<div class="inner horizontal">
+						<button id="manual" class="selected" disabled>
+							Manual</button>
+						<button id="auto" class="unselected">Add auto</button>
+						<button id="mauto" class="unselected">Max auto</button>
+					</div>
+				</div>
+			</div>
+			<div id="right" class="inner">
+				<p>Computer</p>
+				<div class="inner scroll zero">
+					<div id="buys" class="inner"></div>
+				</div>
+			</div>
+		</div>
+		<script src="script.js"></script>
+		<script src="tree.js"></script>
+	</body>
+</html>
