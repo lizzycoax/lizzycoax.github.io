@@ -7,6 +7,7 @@ p, span {
 	text-align: center;
 }
 button {
+	min-height: 2em;
 	font-size: 1em;
 	margin: 2px;
 	border: 2px solid;
@@ -56,7 +57,7 @@ button {
 		color: #666;
 	}
 	&.completed {
-		background: #648;
+		background: #080;
 		border-color: #fff;
 		color: #fff;
 	}
@@ -71,8 +72,11 @@ button {
 		height: 100vh;
 	}
 }
+#left {
+	grid-template-rows: 1fr 0fr 1fr;
+}
 #middle {
-	grid-template-rows: 1fr 0fr 3fr 0fr;
+	grid-template-rows: 1fr 0fr 0fr 3fr;
 }
 #right {
 	grid-template-rows: 0fr 1fr;
@@ -82,8 +86,8 @@ button {
 	border: 2px solid #bbb;
 	border-radius: 4px;
 	background: linear-gradient(
-		100grad, rgb(from #333 r g b / var(--l)), #fff0 30%, #fff0 70%,
-		rgb(from #333 r g b / var(--r)));
+		100grad, rgb(from #fff r g b / calc(var(--l) / 10)),
+		#fff0 30%, #fff0 70%, rgb(from #fff r g b / calc(var(--r) / 10)));
 }
 @property --l {
 	syntax: "<number>";
@@ -128,6 +132,11 @@ button {
 }
 .small {
 	font-size: 0.75em;
+}
+.uncenter {
+	padding: 1em;
+	text-align: left;
+	text-overflow: ellipsis;
 }
 .hidden {
 	opacity: 0%;

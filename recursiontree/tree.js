@@ -1,24 +1,22 @@
-mode = 0;
-names =
-[
-	"×", "××", "×××", "××××", "↑↑", "↑↑↑", "↑↑↑↑"
-];
-base2 = Array(names.length + 1).fill(0);
-progress = Array(names.length + 1).fill(0);
-nodes = [];
-completed = 0;
-b = 10;
-
 recurse = i =>
 (
 	i <= 3
 	? (
-		base2[i] = (i <= 2 && base2[i + 2]) ? 1 : Math.floor(base2[i] / b),
-		base2 = base2.map((x, j) => j < i ? 1 : x)
+		base2.some((x, i) => i >= 8 && x)
+		? (
+			base2[i] = base2[i + 1] ? 2 : 1,
+			base2 = base2.map((x, j) => j < i ? 2 : x)
+		)
+		: (
+			base2[i] = i <= 2 && base2[i + 2] ? 1 : Math.floor(base2[i] / b),
+			base2 = base2.map((x, j) => j < i ? 1 : x)
+		)
 	)
-	: i <= 6
+	: i <= 9
 	&& (
-		base2[0] = i == 4 ? 5 : base2[i] + 1,
+		base2[0] = i == 4 ? base2.some((x, i) => i >= 8 && x) ? 6 : 5
+			: i == 7 ? base2.some((x, i) => i >= 8 && x) ? 4 : 5
+			: i >= 8 && i <= 9 ? base2[i] : base2[i] + 1,
 		base2 = base2.map((x, j) => j > 0 && j <= i ? 0 : x)
 	),
 	base2[i + 1]++
@@ -43,16 +41,18 @@ nodeclick = i =>
 	: (
 		i == unlocked
 		&& (
-			unlocked++, make.innerHTML = `Compute ${unlocked - 3}B of data`,
-			b > 3 &&
-			(
+			unlocked++,
+			make.innerHTML = `Compute ${unlocked - 3} bytes of data`,
+			b > 4
+			&& (
 				b--,
 				progress = progress.map(() => 0),
 				nodes.forEach(x => x.n = 0),
 				completed = 0, base = 0, reset()
 			)
 		),
-		recurse(i)
+		recurse(i),
+		lgoogol = 0
 	)
 );
 
@@ -60,19 +60,30 @@ autop = i =>
 (
 	i <= 2
 	? (
-		progress[i] += Math.min(base2[i], b),
-		progress[i + 1] = Math.max(Math.floor((progress[i] - 1) / (b - 1)), 0),
-		base2[i] = Math.floor((progress[i] - 1) % (b - 1)) + 1
+		base2.some((x, i) => i >= 8 && x)
+		? (
+			progress[i] += Math.min(base2[i], b),
+			progress[i + 1] = Math.max(
+				Math.floor((progress[i] - 2) / (b - 2)), 0),
+			base2[i] = Math.floor((progress[i] - 2) % (b - 2)) + 2
+		)
+		: (
+			progress[i] += Math.min(base2[i], b),
+			progress[i + 1] = Math.max(
+				Math.floor((progress[i] - 1) / (b - 1)), 0),
+			base2[i] = Math.floor((progress[i] - 1) % (b - 1)) + 1
+		)
 	)
-	: i == 3
+	: i == 3 || i >= 7 && i <= 8
 	? (
 		progress[i] += Math.min(base2[i], b),
 		progress[i + 1] = Math.floor(progress[i] / b),
 		base2[i] = progress[i] % b
 	)
-	: i <= 5 && (
+	: i >= 4 && i <= 6
+	&& (
 		progress[i] += Math.min(base2[i], b - 1),
-		progress[i + 1] = Math.floor(progress[i] / (b = 1)),
+		progress[i + 1] = Math.floor(progress[i] / (b - 1)),
 		base2[i] = progress[i] % (b - 1)
 	)
 );
@@ -87,40 +98,75 @@ gain2 = d =>
 		i < completed ? autop(i)
 		: i == completed ? base2[i] += Math.floor(progress[i])
 		: (
-			base2[i - 1] >= (i <= 5 ? b : b - 1) && progress[i] >= 1
+			base2[i - 1] >= (i >= 6 && i <= 8 ? b - 1 : b) && progress[i] >= 1
 				&& (recurse(i - 1), progress[i] = 0)
 		)
 	)),
 	progress[0] %= 1
 );
 
-display2 = () =>
+ord = (num, seq) =>
 (
-	googol.innerHTML =
+	Array(3).fill(0).map((x, i) => base2[8 + i]).map((x, i) =>
 	(
-		Array(3).fill(0).reduce((x, y, i) =>
-		(
-			(base2[i + 5] == 0 ? "" : (base2[i + 5] == 1 ? "" : "(")
-				+ b + "↑".repeat(i + 2) + (base2[i + 5] == 1 ? ""
-					: ")<sup>" + base2[i + 5] + "</sup>")) + x
-		),
-		base2[0] + Array(4).fill(0).reduceRight((x, y, i) =>
-		(
-			base2[i + 1] == 0 ? ""
-				: (unlocked > 4 || base2[i + 1] >= 30 || i < 3 && base2[i + 2]
+		!seq || base2.some((x, j) => j >= 8 && j < i + 8 && x) ? x
+		: x ? x - 1 : i <= 1 && !x && base2[9 + i] ? 1 : x
+	)
+	).map((x, i) =>
+	(
+		x && ("ω" + (i == 0 ? "" : `<sup>${i + 1}</sup>`) + (x == 1 ? "" : x))
+	)
+	).filter(x => x).reverse().join(" + ")
+	+ (seq && !base2[8] ? " × " : " + ") + num
+);
+
+display2 = d =>
+(
+	(lgoogol -= d, lgoogol <= 0)
+	&& (
+		lgoogol = 1.5,
+		googol.innerHTML =
+			Array(3).fill(0).reduce((x, y, i) =>
+			(
+				(base2[i + 5] == 0 ? ""
+					: (base2[i + 5] == 1 ? "" : "(") + b
+					+ (base2.some((x, i) => i >= 8 && x)
+						? `↑<sup>${ord(i + 1)}</sup>`
+						: "↑".repeat(i + 2))
+					+ (base2[i + 5] == 1 ? "" : ")"
+					+ "<sup>" + base2[i + 5] + "</sup>")
+				+ "(") + x + (base2[i + 5] == 0 ? "" : ")")
+			),
+			(x =>
+			(
+				base2.some((x, i) => i >= 8 && x)
+					? `${b}↑<sup>${ord(x + base2[0], true)}</sup>${b}`
+					: base2[0] + x
+			)
+			)(Array(4).fill(0).reduceRight((x, y, i) =>
+			(
+				base2[i + 1] == 0 ? ""
+				: base2.some((x, i) => i >= 8 && x)
+				? `${b}↑<sup>${ord(x + base2[i + 1], true)}</sup>`
+				: unlocked >= 5 || base2[i + 1] >= 30 || i < 3 && base2[i + 2]
 				? `×${b}<sup>${base2[i + 1] + x}</sup>`
-				: "0".repeat(base2[i + 1]) + x)
-		),
-		""))
-	),
+				: "0".repeat(base2[i + 1]) + x
+			),
+			"")))
+	)
+);
+
+updtree = () =>
+(
 	nodepre.innerHTML = base2[0],
 	nodes.forEach((node, i) =>
 	(
 		node.info.innerHTML =
 			i > unlocked || node.title.innerHTML == "" ? ``
-			: i == unlocked ? b == 3 ? `` : `prestige`
+			: i == unlocked ? b == 4 ? `` : `prestige`
 			: i + 1 <= completed ? mode == 0 ? base2[i + 1] : `instant`
-			: `${base2[i + 1]}, ${node.n}/s`
+			: `${base2[i + 1]}`
+			+ (mode == 0 && node.n == 0 ? "" : `, ${node.n}/s`)
 	))
 );
 
@@ -132,7 +178,8 @@ enable2 = () =>
 			? node.button.classList.add("completed")
 			: node.button.classList.remove("completed"),
 		i <= unlocked && i + 1 > completed &&
-			(i == unlocked || mode == 0 ? base2[i] >= (i <= 4 ? b : b - 1)
+			(i == unlocked || mode == 0
+				? base2[i] >= (i >= 5 && i <= 7 ? b - 1 : b)
 				: i + 1 < names.length && base2[i + 2] >= 1)
 			? node.button.removeAttribute("disabled")
 			: node.button.setAttribute("disabled", true)
@@ -143,9 +190,13 @@ complete = () =>
 	nodes.forEach((node, i) =>
 		node.n == 60 && completed == i && completed++);
 
+nodes = (saved =>
+	saved ? JSON.parse(saved) : names.map((x, i) => ({n: 0, locked: i > 0}))
+)(localStorage.getItem("nodes"));
+
 tree.innerHTML =
 	[
-		[-1], [0], [1, 4], [2, 5], [3, 6]
+		[-1], [0], [1, 4], [2, 5], [3, 6], [7], [8], [9]
 	]
 	.map(x =>
 	(
@@ -155,18 +206,25 @@ tree.innerHTML =
 			i == null ? `<div></div>`
 			: i == -1
 			? `<button id="nodepre" class="node empty" disabled></button>`
-			: `<button id="node${i}" class="node${i == 0 ? "" : " locked"}"`
-			+ `onclick="nodeclick(${i})" disabled>`
-			+ `<span id="name">${i >= 0 ? names[i] : ""}</span>`
+			: `<button id="node${i}" class="node${nodes[i].locked
+			? " locked" : ""}"onclick="nodeclick(${i})" disabled>`
+			+ `<span id="name">${nodes[i].locked ? "" : names[i]}</span>`
 			+ `<br><span id="info" class="small">0/s</span></button>`
 		)
 		).join("") + `</div></div>`
 	)
 	).join("");
 
-(f => f(f)(0)(0)(0))(f => b => l => t =>
-	(gain2(b / 1000), complete(), display2(), enable2(),
-		requestAnimationFrame(f(f)(t - l)(t))));
+nodes =
+	nodes.map((x, i) =>
+	({
+		n: x.n, name: names[i], button: document.querySelector(`#node${i}`)
+	}))
+	.map((x, i) =>
+	({
+		...x, info: x.button.querySelector(`#info`),
+		title: x.button.querySelector(`#name`)
+	}));
 
 (buttons =>
 (
@@ -187,11 +245,9 @@ tree.innerHTML =
 )
 )([manual, auto, mauto]);
 
-nodes =
-	names.map((x, i) =>
-		({name: names[i], button: document.querySelector(`#node${i}`)}))
-	.map((x, i) =>
-	({
-		...x, n: 0, info: x.button.querySelector(`#info`),
-		title: x.button.querySelector(`#name`)
-	}));
+(l => l && (gain2((new Date().getTime() - JSON.parse(l)) / 1000)))(
+	localStorage.getItem("time"));
+
+(f => f(f)(0)(0)(0))(f => b => l => t =>
+	(gain2(b / 1000), complete(), display2(b / 1000), updtree(), enable2(),
+		requestAnimationFrame(f(f)(t - l)(t))));
